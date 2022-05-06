@@ -1,0 +1,4 @@
+.idea
+.storybook
+.config
+node_modules/*
