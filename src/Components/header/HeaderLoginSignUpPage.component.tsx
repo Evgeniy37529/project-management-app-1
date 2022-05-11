@@ -1,14 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button, PageHeader } from 'antd';
 import { theme } from '../../utils/theme';
-import { Link } from 'react-router-dom';
-const Header = () => {
+
+const HeaderLoginSignUpPage = () => {
   const navigate = useNavigate();
+  console.log();
   return (
     <PageHeader
       className="site-page-header-responsive"
-      onBack={() => navigate('/home')}
+      onBack={() => navigate('/')}
       title="Вернуться на главную"
       style={{ backgroundColor: theme.colors.whiteMatt }}
       extra={[
@@ -17,9 +18,9 @@ const Header = () => {
         </Link>,
         <Link to="/sign-up" key="sign-up-link">
           <Button key="sign-up">Sign up</Button>
-        </Link>,
+        </Link>
       ]}
     />
   );
 };
-export default Header;
+export default HeaderLoginSignUpPage;
