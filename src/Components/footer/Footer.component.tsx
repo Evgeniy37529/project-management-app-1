@@ -1,5 +1,5 @@
 import React from 'react';
-import './footer.module.css';
+import './footer.css';
 
 const Footer = () => {
   const linkLogoGithub = 'https://www.svgrepo.com/show/359980/github.svg';
@@ -13,7 +13,7 @@ const Footer = () => {
       {linkGithubPages.map((el) => {
         return (
           <a href={el} key={el}>
-            <img src={linkLogoGithub} alt="logo" className="footer-icon" />
+            <img src={linkLogoGithub} alt="logo" className="footerIcon" />
           </a>
         );
       })}
