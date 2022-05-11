@@ -3,10 +3,11 @@ import { Button, PageHeader } from 'antd';
 import { theme } from '../../utils/theme';
 import { Link } from 'react-router-dom';
 const Header = () => {
+  console.log(window.location.href);
   return (
     <PageHeader
       className="site-page-header-responsive"
-      onBack={() => window.history.back()}
+      onBack={() => <Link to="/" />}
       title="Вернуться на главную"
       style={{ backgroundColor: theme.colors.whiteMatt }}
       extra={[

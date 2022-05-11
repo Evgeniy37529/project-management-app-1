@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import Login from '../login/login.component';
-import Header from '../header/header.component';
-import SignUp from '../sign-up/sign-up.component';
-import Footer from '../footer/footer.component';
+import Login from '../../Pages/login/LoginPage';
+import Header from '../../Components/header/Header.component';
+import SignUp from '../../Pages/sign-up/SignUpPage';
+import Footer from '../../Components/footer/Footer.component';
 
 const App = () => {
   return (

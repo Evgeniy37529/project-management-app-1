@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, Alert } from 'antd';
-import axios from 'axios';
 
 const Login = (): JSX.Element => {
   const onFinish = () => {

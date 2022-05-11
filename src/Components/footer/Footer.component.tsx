@@ -1,5 +1,6 @@
 import React from 'react';
-import './index.css';
+import './footer.module.css';
+
 const Footer = () => {
   const linkLogoGithub = 'https://www.svgrepo.com/show/359980/github.svg';
   const linkGithubPages = [
