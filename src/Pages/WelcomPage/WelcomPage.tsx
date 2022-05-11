@@ -11,19 +11,19 @@ const DEVELOPER_CARDS_INFO = [
     id: 1,
     name: 'Дмитрий',
     role: 'Роль в команде 1',
-    avatar: require('../../../assets/img/avatar.jpg'),
+    avatar: require('../../assets/img/avatar.jpg'),
   },
   {
     id: 2,
     name: 'Дарья',
     role: 'Роль в команде 2',
-    avatar: require('../../../assets/img/avatar.jpg'),
+    avatar: require('../../assets/img/avatar.jpg'),
   },
   {
     id: 3,
     name: 'Евгений',
     role: 'Роль в команде 3',
-    avatar: require('../../../assets/img/avatar.jpg'),
+    avatar: require('../../assets/img/avatar.jpg'),
   },
 ];
 

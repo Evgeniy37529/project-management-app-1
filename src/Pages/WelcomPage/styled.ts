@@ -4,7 +4,7 @@ export const Page = styled.div`
    {
     padding: 20px 20px 0 20px;
     box-shadow: inset 10px 10px 100px 432px rgba(227, 227, 220, 0.66);
-    background: url(${require('../../../assets/img/bg.jpg')}) center/cover;
+    background: url(${require('../../assets/img/bg.jpg')}) center/cover;
   }
 `;
 
