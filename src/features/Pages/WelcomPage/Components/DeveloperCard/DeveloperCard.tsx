@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useState } from 'react';
 import { Col, Card, Typography } from 'antd';
 const { Paragraph } = Typography;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { Row, Typography, Layout, Button } from 'antd';
 import styles from './welcomPage.module.css';
@@ -28,8 +27,8 @@ const DeveloperCardsInfo = [
   },
 ];
 
-export const WelcomPage: React.FC = () => {
-  const developerСardList = DeveloperCardsInfo.map(({ id, name, role, avatar }) => (
+export const WelcomePage: React.FC = () => {
+  const developerCardList = DeveloperCardsInfo.map(({ id, name, role, avatar }) => (
     <DeveloperCard key={id} name={name} role={role} avatar={avatar} />
   ));
   return (
@@ -65,7 +64,7 @@ export const WelcomPage: React.FC = () => {
                   { xs: 16, sm: 16, md: 0, lg: 0 },
                 ]}
               >
-                {developerСardList}
+                {developerCardList}
               </Row>
             </div>
           </div>
