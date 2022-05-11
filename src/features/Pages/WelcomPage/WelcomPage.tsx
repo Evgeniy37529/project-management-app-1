@@ -1,12 +1,12 @@
 import React from 'react';
 import { Row, Typography, Layout, Button } from 'antd';
-import styles from './welcomPage.module.css';
+import { Page, AuthButtons, AboutProject, CardWrapper } from './styled';
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 
 const { Title, Paragraph } = Typography;
 const { Content, Footer } = Layout;
 
-const DeveloperCardsInfo = [
+const DEVELOPER_CARDS_INFO = [
   {
     id: 1,
     name: 'Дмитрий',
@@ -28,36 +28,37 @@ const DeveloperCardsInfo = [
 ];
 
 export const WelcomePage: React.FC = () => {
-  const developerCardList = DeveloperCardsInfo.map(({ id, name, role, avatar }) => (
+  const developerCardList = DEVELOPER_CARDS_INFO.map(({ id, name, role, avatar }) => (
     <DeveloperCard key={id} name={name} role={role} avatar={avatar} />
   ));
+
   return (
     <Layout className="layout">
-      <div className={styles.welcomPage}>
-        <div className={styles.auth}>
-          <Button className={styles.logIn} type="primary" ghost>
+      <Page>
+        <AuthButtons>
+          <Button style={{ marginRight: '10px' }} type="primary" ghost>
             Log In
           </Button>
-          <Button className={styles.signUp} type="primary" ghost>
+          <Button type="primary" ghost>
             Sign Up
           </Button>
-        </div>
+        </AuthButtons>
         <Content className="container">
-          <div className={styles.aboutProject}>
-            <Title className={styles.title} level={1}>
+          <AboutProject>
+            <Title style={{ fontSize: 'calc(1rem + 2vw)', textAlign: 'center' }} level={1}>
               О проекте
             </Title>
-            <Paragraph className={styles.paragraph}>
+            <Paragraph style={{ fontSize: 'calc(1rem + 1vw)', textAlign: 'center' }}>
               Проект создан командой разработчиков RS School в рамка финального задания
               &quot;Система управления проектами&quot;. Приложение позволит команде организовать и
               структурировать процесс разработки, выполняя поставленные задачи.
             </Paragraph>
-          </div>
+          </AboutProject>
           <div>
-            <Title className={styles.title} level={2}>
+            <Title style={{ fontSize: 'calc(1rem + 2vw)', textAlign: 'center' }} level={2}>
               Команда
             </Title>
-            <div className={styles.cardWrapper}>
+            <CardWrapper>
               <Row
                 gutter={[
                   { xs: 0, sm: 0, md: 16, lg: 16 },
@@ -66,11 +67,20 @@ export const WelcomePage: React.FC = () => {
               >
                 {developerCardList}
               </Row>
-            </div>
+            </CardWrapper>
           </div>
         </Content>
-      </div>
-      <Footer className={styles.footer}>тут будет футер</Footer>
+      </Page>
+      <Footer
+        style={{
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          background: '#eee7e779',
+          boxShadow: '0 0 5px 0px rgb(1, 1, 1), inset 0 0 15px 0px rgb(1, 1, 1)',
+        }}
+      >
+        тут будет футер
+      </Footer>
     </Layout>
   );
 };
