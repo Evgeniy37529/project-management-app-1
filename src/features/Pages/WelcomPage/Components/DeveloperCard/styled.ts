@@ -25,8 +25,3 @@ export const AvatarImage = styled.img`
     object-fit: cover;
   }
 `;
-
-// export const Card1 = styled.Card`
-// {
-
-// }`
