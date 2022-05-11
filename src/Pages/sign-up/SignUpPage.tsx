@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, Alert } from 'antd';
-import axios from 'axios';
 
 const SignUp = () => {
   const onFinish = () => {
@@ -14,13 +13,13 @@ const SignUp = () => {
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8
+        span: 8,
       }}
       wrapperCol={{
-        span: 10
+        span: 10,
       }}
       initialValues={{
-        remember: true
+        remember: true,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -32,8 +31,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your name!'
-          }
+            message: 'Please input your name!',
+          },
         ]}
       >
         <Input />
@@ -44,8 +43,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your login!'
-          }
+            message: 'Please input your login!',
+          },
         ]}
       >
         <Input />
@@ -57,8 +56,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!'
-          }
+            message: 'Please input your password!',
+          },
         ]}
       >
         <Input.Password />
@@ -69,7 +68,7 @@ const SignUp = () => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
         <Checkbox>Remember me</Checkbox>
@@ -78,7 +77,7 @@ const SignUp = () => {
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
         <Button type="primary" htmlType="submit">
