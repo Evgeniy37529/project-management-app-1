@@ -1,0 +1,27 @@
+.developer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+}
+.developerAvatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+.developerAvatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.card {
+    background: rgba(255, 255, 255, 0.449) !important;
+    border-radius: 20px !important;
+    min-height: 400px;
+    overflow-y: auto;
+    
+}
+.role {
+    font-size: 20px;
+}
