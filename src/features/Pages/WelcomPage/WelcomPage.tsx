@@ -76,16 +76,6 @@ export const WelcomePage: React.FC = () => {
           </div>
         </Content>
       </Page>
-      <Footer
-        style={{
-          paddingTop: '10px',
-          paddingBottom: '10px',
-          background: '#eee7e779',
-          boxShadow: '0 0 5px 0px rgb(1, 1, 1), inset 0 0 15px 0px rgb(1, 1, 1)'
-        }}
-      >
-        тут будет футер
-      </Footer>
     </Layout>
   );
 };
