@@ -4,7 +4,6 @@ import Login from '../../Pages/login/LoginPage';
 import SignUp from '../../Pages/sign-up/SignUpPage';
 import Footer from '../../Components/footer/Footer.component';
 import { WelcomePage } from '../Pages/WelcomPage/WelcomPage';
-import 'antd/dist/antd.min.css';
 import './App.css';
 import Header from '../../Components/header/Header.component';
 
