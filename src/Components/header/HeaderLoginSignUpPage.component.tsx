@@ -5,7 +5,6 @@ import { theme } from '../../utils/theme';
 
 const HeaderLoginSignUpPage = () => {
   const navigate = useNavigate();
-  console.log();
   return (
     <PageHeader
       className="site-page-header-responsive"
