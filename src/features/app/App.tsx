@@ -7,6 +7,7 @@ import { WelcomePage } from '../../Pages/WelcomPage/WelcomPage';
 import './App.css';
 import Header from '../../Components/header/Header.component';
 import Boards from '../../Pages/boards/boards';
+import Board from '../../Pages/board/board';
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/boards" element={<Boards />} />
-        <Route path="/boards/:id" />
+        <Route path="/boards/:id" element={<Board />} />
         <Route path="/404" />
         <Route path="/welcome" />
         <Route path="/login" element={<Login />} />
