@@ -6,7 +6,6 @@ import Search from './components/search/search';
 const Boards: FC = () => {
   return (
     <>
-      <Buttons />
       <Search />
       <BoardsMain />
     </>
