@@ -38,6 +38,7 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
     Project: {
       content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>,
     },
+
   };
   return (
     <Col md={24} xs={24} sm={24} lg={8}>

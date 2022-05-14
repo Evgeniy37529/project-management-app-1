@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Typography, Layout, Button } from 'antd';
 import { Page, AuthButtons, AboutProject, CardWrapper } from './styled';
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
+import { Link } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 const { Content, Footer } = Layout;
@@ -25,6 +26,7 @@ const DEVELOPER_CARDS_INFO = [
     role: 'Роль в команде 3',
     avatar: require('../../assets/img/avatar.jpg'),
   },
+
 ];
 
 export const WelcomePage: React.FC = () => {
@@ -36,12 +38,17 @@ export const WelcomePage: React.FC = () => {
     <Layout className="layout">
       <Page>
         <AuthButtons>
-          <Button style={{ marginRight: '10px' }} type="primary" ghost>
-            Log In
-          </Button>
-          <Button type="primary" ghost>
-            Sign Up
-          </Button>
+
+          <Link to="/login">
+            <Button style={{ marginRight: '10px' }} type="primary" ghost>
+              Log In
+            </Button>
+          </Link>
+          <Link to="/sign-up">
+            <Button type="primary" ghost>
+              Sign Up
+            </Button>
+          </Link>
         </AuthButtons>
         <Content className="container">
           <AboutProject>
@@ -62,7 +69,8 @@ export const WelcomePage: React.FC = () => {
               <Row
                 gutter={[
                   { xs: 0, sm: 0, md: 16, lg: 16 },
-                  { xs: 16, sm: 16, md: 0, lg: 0 },
+                  { xs: 16, sm: 16, md: 0, lg: 0 }
+
                 ]}
               >
                 {developerCardList}
@@ -71,16 +79,6 @@ export const WelcomePage: React.FC = () => {
           </div>
         </Content>
       </Page>
-      <Footer
-        style={{
-          paddingTop: '10px',
-          paddingBottom: '10px',
-          background: '#eee7e779',
-          boxShadow: '0 0 5px 0px rgb(1, 1, 1), inset 0 0 15px 0px rgb(1, 1, 1)',
-        }}
-      >
-        тут будет футер
-      </Footer>
     </Layout>
   );
 };
