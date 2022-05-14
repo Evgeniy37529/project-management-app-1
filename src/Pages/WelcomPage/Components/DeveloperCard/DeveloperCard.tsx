@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Col, Card, Typography } from 'antd';
 const { Paragraph } = Typography;
 import { AvatarImage, Developer, DeveloperAvatar } from './styled';
+import { useTranslation } from 'react-i18next';
 
 type DeveloperCardProps = {
   name: string;
@@ -39,6 +40,8 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
       content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>,
     },
   };
+  const { t, i18n } = useTranslation();
+
   return (
     <Col md={24} xs={24} sm={24} lg={8}>
       <Card
