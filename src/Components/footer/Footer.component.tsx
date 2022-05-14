@@ -1,16 +1,7 @@
 import React from 'react';
 import { FooterBlock, FooterLogoGithub } from './styled';
-
-const LINK_LOGO_GITHUB = [
-  'http://svgur.com/i/h50.svg',
-  'http://svgur.com/i/h4K.svg',
-  'http://svgur.com/i/h5q.svg'
-];
-const LINK_GITHUB_PAGES = [
-  'https://github.com/Dmitriy-hello-world',
-  'https://github.com/Evgeniy37529',
-  'https://github.com/DariaMalina'
-];
+import { LINK_GITHUB_PAGES } from '../../conts/footerConst';
+import { LINK_LOGO_GITHUB } from '../../conts/footerConst';
 
 const Footer = () => {
   return (
