@@ -10,17 +10,6 @@ type DeveloperCardProps = {
   avatar: string;
 };
 
-const TAB_LIST = [
-  {
-    key: 'Developer',
-    tab: 'Developer',
-  },
-  {
-    key: 'Project',
-    tab: 'Project',
-  },
-];
-
 export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar }) => {
   const [activeTabKey, setActiveTabKey] = useState('Developer');
   const onTabChange = (key: string) => {
@@ -40,7 +29,7 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
       content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>,
     },
   };
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Col md={24} xs={24} sm={24} lg={8}>
@@ -53,8 +42,18 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
         }}
         title={name}
         bordered={false}
-        tabList={TAB_LIST}
+        tabList={[
+          {
+            key: 'Developer',
+            tab: t('welcomPage.developer'),
+          },
+          {
+            key: 'Project',
+            tab: t('welcomPage.project'),
+          },
+        ]}
         onTabChange={(key) => {
+          console.log(key);
           onTabChange(key);
         }}
       >
