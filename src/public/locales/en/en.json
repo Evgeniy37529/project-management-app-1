@@ -17,7 +17,22 @@
     "signUp": {
         "name": "Name",
         "login": "Login",
-        "password": "Password"
+        "password": "Password",
+        "input_name_message": "Please input your name!",
+        "input_login_message": "Please input your login!",
+        "input_password_message": "Please input your password!",
+        "remember_me": "Remember me",
+        "back_main_page": "back to the main page"
+    },
+    "boards": {
+        "close": "closed",
+        "open": "open"
+    },
+    "header": {
+        "create_new_board": "Create new board",
+        "edit_profile": "Edit profile",
+        "sign_out": "Sign Out"
     }   
+    
 
 }

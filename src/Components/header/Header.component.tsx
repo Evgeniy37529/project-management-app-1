@@ -1,25 +1,21 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, PageHeader } from 'antd';
-import { theme } from '../../utils/theme';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import HeaderAuthorisingUser from './HeaderAuthorizedUser.component';
+import HeaderLoginSignUpPage from './HeaderLoginSignUpPage.component';
+
 const Header = () => {
-  const navigate = useNavigate();
-  return (
-    <PageHeader
-      className="site-page-header-responsive"
-      onBack={() => navigate('/home')}
-      title="Вернуться на главную"
-      style={{ backgroundColor: theme.colors.whiteMatt }}
-      extra={[
-        <Link to="/login" key="login-link">
-          <Button key="login">Login</Button>
-        </Link>,
-        <Link to="/sign-up" key="sign-up-link">
-          <Button key="sign-up">Sign up</Button>
-        </Link>,
-      ]}
-    />
-  );
+  const location = useLocation();
+
+  const renderHeader = () => {
+    if (localStorage.getItem('token')) {
+      return <HeaderAuthorisingUser />;
+    }
+    if (location.pathname === '/') {
+      return <></>;
+    }
+    return <HeaderLoginSignUpPage />;
+  };
+
+  return <>{renderHeader()}</>;
 };
 export default Header;

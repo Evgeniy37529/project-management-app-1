@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const backgroundImage = require('../../assets/img/bg.jpg');
 
 export const Page = styled.div`
    {
     padding: 20px 20px 0 20px;
     box-shadow: inset 10px 10px 100px 432px rgba(227, 227, 220, 0.66);
-    background: url(${require('../../assets/img/bg.jpg')}) center/cover;
+    background: url(${backgroundImage}) center/cover;
   }
 `;
 
@@ -12,6 +14,7 @@ export const AuthButtons = styled.div`
    {
     display: flex;
     justify-content: end;
+    align-items: center;
   }
 `;
 

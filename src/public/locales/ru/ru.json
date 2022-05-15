@@ -17,6 +17,20 @@
     "signUp": {
         "name": "Имя",
         "login": "Логин",
-        "password": "Пароль"
-    }    
+        "password": "Пароль",
+        "input_name_message": "Пожалуйста введите ваше имя!",
+        "input_login_message": "Пожалуйста введите ваш логин!",
+        "input_password_message": "Пожалуйста введите ваш пароль!",
+        "remember_me": "Запомнить меня",
+        "back_main_page": "Вернуться на главную"
+    },
+    "boards": {
+        "close": "закрыто",
+        "open": "открыто"
+    },
+    "header": {
+        "create_new_board": "Создать новую доску",
+        "edit_profile": "Редактировать профиль",
+        "sign_out": "Выйти"
+    }         
 }
