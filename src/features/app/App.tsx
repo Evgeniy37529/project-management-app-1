@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Login from '../../Pages/login/LoginPage';
 import SignUp from '../../Pages/sign-up/SignUpPage';
 import Footer from '../../Components/footer/Footer.component';

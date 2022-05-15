@@ -23,11 +23,11 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
             <AvatarImage src={avatar} alt="avatar" />
           </DeveloperAvatar>
         </Developer>
-      ),
+      )
     },
     Project: {
-      content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>,
-    },
+      content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>
+    }
   };
   const { t } = useTranslation();
 
@@ -38,22 +38,21 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
           background: '#ffffff72',
           borderRadius: '20px',
           minHeight: '400px',
-          overflowY: 'auto',
+          overflowY: 'auto'
         }}
         title={name}
         bordered={false}
         tabList={[
           {
             key: 'Developer',
-            tab: t('welcomPage.developer'),
+            tab: t('welcomPage.developer')
           },
           {
             key: 'Project',
-            tab: t('welcomPage.project'),
-          },
+            tab: t('welcomPage.project')
+          }
         ]}
         onTabChange={(key) => {
-          console.log(key);
           onTabChange(key);
         }}
       >
