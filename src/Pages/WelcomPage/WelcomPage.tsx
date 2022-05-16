@@ -5,30 +5,10 @@ import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { SwitcherLanguage } from '../../Components/switcherLanguage/SwitcherLanguage';
+import { DEVELOPER_CARDS_INFO } from '../../conts/developerCardConst';
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
-
-const DEVELOPER_CARDS_INFO = [
-  {
-    id: 1,
-    name: 'welcomPage.name_Dm',
-    role: 'welcomPage.role_in_team_1',
-    avatar: require('../../assets/img/avatar.jpg'),
-  },
-  {
-    id: 2,
-    name: 'welcomPage.name_Dar',
-    role: 'welcomPage.role_in_team_1',
-    avatar: require('../../assets/img/avatar.jpg'),
-  },
-  {
-    id: 3,
-    name: 'welcomPage.name_Ev',
-    role: 'welcomPage.role_in_team_1',
-    avatar: require('../../assets/img/avatar.jpg'),
-  },
-];
 
 export const WelcomePage: React.FC = () => {
   const { t, i18n } = useTranslation();

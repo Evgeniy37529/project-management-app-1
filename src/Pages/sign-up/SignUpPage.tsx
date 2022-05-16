@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-
 const SignUp = () => {
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
