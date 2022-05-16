@@ -12,21 +12,20 @@ const DEVELOPER_CARDS_INFO = [
     id: 1,
     name: 'Дмитрий',
     role: 'Роль в команде 1',
-    avatar: require('../../assets/img/avatar.jpg'),
+    avatar: require('../../assets/img/avatar.jpg')
   },
   {
     id: 2,
     name: 'Дарья',
     role: 'Роль в команде 2',
-    avatar: require('../../assets/img/avatar.jpg'),
+    avatar: require('../../assets/img/avatar.jpg')
   },
   {
     id: 3,
     name: 'Евгений',
     role: 'Роль в команде 3',
-    avatar: require('../../assets/img/avatar.jpg'),
-  },
-
+    avatar: require('../../assets/img/avatar.jpg')
+  }
 ];
 
 export const WelcomePage: React.FC = () => {
@@ -38,7 +37,6 @@ export const WelcomePage: React.FC = () => {
     <Layout className="layout">
       <Page>
         <AuthButtons>
-
           <Link to="/login">
             <Button style={{ marginRight: '10px' }} type="primary" ghost>
               Log In
@@ -70,7 +68,6 @@ export const WelcomePage: React.FC = () => {
                 gutter={[
                   { xs: 0, sm: 0, md: 16, lg: 16 },
                   { xs: 16, sm: 16, md: 0, lg: 0 }
-
                 ]}
               >
                 {developerCardList}

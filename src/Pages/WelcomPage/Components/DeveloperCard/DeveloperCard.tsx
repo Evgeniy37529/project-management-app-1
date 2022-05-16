@@ -12,12 +12,12 @@ type DeveloperCardProps = {
 const TAB_LIST = [
   {
     key: 'Developer',
-    tab: 'Developer',
+    tab: 'Developer'
   },
   {
     key: 'Project',
-    tab: 'Project',
-  },
+    tab: 'Project'
+  }
 ];
 
 export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar }) => {
@@ -33,12 +33,11 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
             <AvatarImage src={avatar} alt="avatar" />
           </DeveloperAvatar>
         </Developer>
-      ),
+      )
     },
     Project: {
-      content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>,
-    },
-
+      content: <Paragraph style={{ fontSize: '20px' }}>{role}</Paragraph>
+    }
   };
   return (
     <Col md={24} xs={24} sm={24} lg={8}>
@@ -47,7 +46,7 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({ name, role, avatar
           background: '#ffffff72',
           borderRadius: '20px',
           minHeight: '400px',
-          overflowY: 'auto',
+          overflowY: 'auto'
         }}
         title={name}
         bordered={false}
