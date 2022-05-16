@@ -3,10 +3,11 @@ import { useLocation } from 'react-router-dom';
 import HeaderAuthorisingUser from './HeaderAuthorizedUser.component';
 import HeaderLoginSignUpPage from './HeaderLoginSignUpPage.component';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const Header = () => {
   const location = useLocation();
-  const { token } = useSelector((state) => state.user);
+  const { token } = useSelector((state: RootState) => state.user);
   useEffect(() => {}, [token]);
   const renderHeader = () => {
     if (localStorage.getItem('token')) {

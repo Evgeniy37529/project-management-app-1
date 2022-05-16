@@ -3,10 +3,11 @@ import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginChange, loginUser, passwordChange } from '../../store/reducers/userReducer';
+import { RootState } from '../../store/store';
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
-  const { login, password, status } = useSelector((state) => state.user);
+  const { login, password, status } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const onFinish = () => {
     dispatch(loginUser({ login, password }));

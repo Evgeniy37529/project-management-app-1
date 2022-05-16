@@ -9,9 +9,10 @@ import {
   nameChange,
   passwordChange
 } from '../../store/reducers/userReducer';
+import { RootState } from '../../store/store';
 
 const SignUp = () => {
-  const { name, login, password, status } = useSelector((state) => state.user);
+  const { name, login, password, status } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
