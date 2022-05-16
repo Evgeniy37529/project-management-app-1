@@ -1,48 +1,31 @@
-import React, { useState, FocusEvent, useEffect } from 'react';
+import React, { FocusEvent, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginChange, loginUser, passwordChange } from '../../store/reducers/userReducer';
 
 const Login = (): JSX.Element => {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [buttonActive, setButtonActive] = useState(false);
   const navigate = useNavigate();
-  const entryRequest = () => {
-    loader();
-    axios
-      .post('https://fierce-reef-60064.herokuapp.com/signin', {
-        login: login,
-        password: password
-      })
-      .then((data) => {
-        if (data.data.token) {
-          localStorage.token = data.data.token;
-          navigate('/boards');
-        }
-        loader();
-      })
-      .catch((err) => {
-        setButtonActive(false);
-        onFinishFailed();
-      });
-  };
+  const { login, password, status } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const onFinish = () => {
-    entryRequest();
+    dispatch(loginUser({ login, password }));
   };
   const onFinishFailed = () => {
     return <Alert message="Incorrect username or password entered." type="error" />;
   };
   const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
-    setLogin(ev.target.value);
+    dispatch(loginChange(ev.target.value));
   };
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
-    setPassword(ev.target.value);
+    dispatch(passwordChange(ev.target.value));
   };
-  const loader = () => {
-    setButtonActive(!buttonActive);
-  };
-  useEffect(() => {}, [buttonActive]);
+
+  useEffect(() => {
+    if (status === 'success') {
+      navigate('/boards');
+    }
+  }, [status]);
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -103,7 +86,7 @@ const Login = (): JSX.Element => {
           span: 16
         }}
       >
-        {buttonActive ? (
+        {status === 'loading' ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">

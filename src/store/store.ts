@@ -1,23 +1,17 @@
-import {
-  configureStore,
-  ThunkAction,
-  Action,
-  applyMiddleware,
-  combineReducers,
-  createStore
-} from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from '@reduxjs/toolkit/dist/devtoolsExtension';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import boardsReducer from './reducers/boardsReducer';
+import userReducer from './reducers/userReducer';
+import boardReducer from './reducers/boardReducer';
+import thunk from 'redux-thunk';
 
-const rootReducer = combineReducers({
-  boardsReducer
+export const store = configureStore({
+  reducer: {
+    boards: boardsReducer,
+    user: userReducer,
+    board: boardReducer
+  },
+  middleware: [thunk]
 });
-// export const store = configureStore({
-//   middleware: { applyMiddleware(thunk); },
-//   reducer: rootReducer
-// });
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

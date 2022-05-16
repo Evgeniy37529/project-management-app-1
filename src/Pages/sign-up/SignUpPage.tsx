@@ -1,58 +1,39 @@
-import React, { useState, FocusEvent } from 'react';
+import React, { useState, FocusEvent, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createUser,
+  loginChange,
+  loginUser,
+  nameChange,
+  passwordChange
+} from '../../store/reducers/userReducer';
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [buttonActive, setButtonActive] = useState(false);
+  const { name, login, password, status } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
-    setName(ev.target.value);
+    dispatch(nameChange(ev.target.value));
   };
   const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
-    setLogin(ev.target.value);
+    dispatch(loginChange(ev.target.value));
   };
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
-    setPassword(ev.target.value);
+    dispatch(passwordChange(ev.target.value));
   };
-  const loader = () => {
-    setButtonActive(!buttonActive);
-  };
-  const navigate = useNavigate();
-  const createAccount = () => {
-    axios
-      .post('https://fierce-reef-60064.herokuapp.com/signup', {
-        name: name,
-        login: login,
-        password: password
-      })
-      .then((data) => {
-        if (data.status === 201) {
-          loader();
-          axios
-            .post('https://fierce-reef-60064.herokuapp.com/signin', {
-              login: login,
-              password: password
-            })
-            .then((data) => {
-              if (data.data.token) {
-                localStorage.token = data.data.token;
-                navigate('/boards');
-              }
-              loader();
-            })
-            .catch((err) => {
-              setButtonActive(false);
-            });
-        }
-      });
-  };
-  const onFinish = () => {
-    createAccount();
+
+  const onFinish = async () => {
+    await dispatch(createUser({ name, login, password }));
     return <Alert message="Success Text" type="success" />;
   };
+  useEffect(() => {
+    if (status === 'success') {
+      dispatch(loginUser({ login, password }));
+      navigate('/boards');
+    }
+  }, [status]);
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -124,11 +105,11 @@ const SignUp = () => {
           span: 16
         }}
       >
-        {buttonActive ? (
+        {status === 'loading' ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
-            Sign in
+            Create
           </Button>
         )}
       </Form.Item>
