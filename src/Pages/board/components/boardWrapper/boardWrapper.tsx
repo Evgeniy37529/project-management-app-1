@@ -4,8 +4,10 @@ import { AddColumn, AddColumnWrapper, BoardWrapperStyled } from './styled';
 import { exampleCardObj } from '../../../../conts/boardCardConst';
 import { exampleCardObjSecond } from '../../../../conts/boardCardConst';
 import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
+import { useTranslation } from 'react-i18next';
 
 const BoardWrapper: FC = () => {
+  const { t } = useTranslation();
   return (
     <BoardWrapperStyled>
       <BoardsColumn {...exampleCardObj} />
@@ -13,7 +15,7 @@ const BoardWrapper: FC = () => {
       <BoardsColumn {...exampleCardObjSecond} />
       <AddColumnWrapper>
         <Plus style={{ marginRight: '10px' }} />
-        <AddColumn>Добавить колонку</AddColumn>
+        <AddColumn>{t('boards.add_column')}</AddColumn>
       </AddColumnWrapper>
     </BoardWrapperStyled>
   );

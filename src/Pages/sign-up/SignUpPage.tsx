@@ -1,13 +1,18 @@
-import React, { useState, FocusEvent } from 'react';
+import React, { useState, FocusEvent, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [buttonActive, setButtonActive] = useState(false);
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('language') || 'en');
+  }, []);
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   };
@@ -26,7 +31,7 @@ const SignUp = () => {
       .post('https://fierce-reef-60064.herokuapp.com/signup', {
         name: name,
         login: login,
-        password: password
+        password: password,
       })
       .then((data) => {
         if (data.status === 201) {
@@ -34,7 +39,7 @@ const SignUp = () => {
           axios
             .post('https://fierce-reef-60064.herokuapp.com/signin', {
               login: login,
-              password: password
+              password: password,
             })
             .then((data) => {
               if (data.data.token) {
@@ -58,50 +63,50 @@ const SignUp = () => {
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8
+        span: 8,
       }}
       wrapperCol={{
-        span: 10
+        span: 10,
       }}
       initialValues={{
-        remember: true
+        remember: true,
       }}
       onFinish={onFinish}
       autoComplete="off"
     >
       <Form.Item
-        label="Name"
+        label={t('signUp.name')}
         name="name"
         rules={[
           {
             required: true,
-            message: 'Please input your name!'
-          }
+            message: `${t('signUp.input_name_message')}`,
+          },
         ]}
       >
         <Input value={name} onBlur={changeName} />
       </Form.Item>
       <Form.Item
-        label="Login"
+        label={t('signUp.login')}
         name="login"
         rules={[
           {
             required: true,
-            message: 'Please input your login!'
-          }
+            message: `${t('signUp.input_login_message')}`,
+          },
         ]}
       >
         <Input value={login} onBlur={changeLogin} />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label={t('signUp.password')}
         name="password"
         rules={[
           {
             required: true,
-            message: 'Please input your password!'
-          }
+            message: `${t('signUp.input_password_message')}`,
+          },
         ]}
       >
         <Input.Password value={password} onBlur={changePassword} />
@@ -112,23 +117,23 @@ const SignUp = () => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>{t('signUp.remember_me')}</Checkbox>
       </Form.Item>
 
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
         {buttonActive ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
-            Sign in
+            {t('welcomPage.sign_up')}
           </Button>
         )}
       </Form.Item>

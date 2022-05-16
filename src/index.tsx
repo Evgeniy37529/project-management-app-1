@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import './reset.css';
 import App from './features/app/App';
+import 'antd/dist/antd.css';
+import './i18n';
+
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

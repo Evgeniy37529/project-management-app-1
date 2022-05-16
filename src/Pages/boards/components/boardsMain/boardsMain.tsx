@@ -4,20 +4,22 @@ import { ReactComponent as Open } from '../../../../assets/svg/open.svg';
 import { ReactComponent as Close } from '../../../../assets/svg/close.svg';
 import BoardsItem from '../boardsItem/boardsItem';
 import { exampleLiItems } from '../../../../conts/boarsMainConst';
+import { useTranslation } from 'react-i18next';
 
 const BoardsMain: FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       <BoardsHeader>
         <Flex>
           <Open style={{ marginRight: '10px' }} />
           {` 0 `}
-          открыто
+          {t('boards.open')}
         </Flex>
         <Flex>
           <Close style={{ marginRight: '10px' }} />
           {` 0 `}
-          закрыто
+          {t('boards.close')}
         </Flex>
       </BoardsHeader>
       <BoardsList>
