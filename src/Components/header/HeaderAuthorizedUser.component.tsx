@@ -1,30 +1,33 @@
-import React from 'react';
-import { Button, Switch, PageHeader } from 'antd';
+import { Button, PageHeader } from 'antd';
 import { theme } from '../../utils/theme';
 import { PlusCircleOutlined, SettingOutlined, ExportOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { SwitcherLanguage } from '../switcherLanguage/SwitcherLanguage';
 
 const HeaderAuthorisingUser = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const exit = () => {
-    localStorage.clear();
+    localStorage.removeItem('token');
     navigate('/');
   };
+
   return (
     <PageHeader
       className="site-page-header-responsive"
       style={{ backgroundColor: theme.colors.whiteMatt }}
       extra={[
         <Button key="Create new board" icon={<PlusCircleOutlined />}>
-          Create new board
+          {t('header.create_new_board')}
         </Button>,
         <Button key="login" icon={<SettingOutlined />}>
-          Edit profile
+          {t('header.edit_profile')}
         </Button>,
         <Button key="sign-up" danger icon={<ExportOutlined />} onClick={exit}>
-          Sign Out
+          {t('header.sign_out')}
         </Button>,
-        <Switch checkedChildren="en" unCheckedChildren="ru" defaultChecked key="language" />
+        <SwitcherLanguage key="language" />,
       ]}
     />
   );

@@ -6,6 +6,7 @@ import BoardsItem from '../boardsItem/boardsItem';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadBoard } from '../../../../store/reducers/boardsReducer';
+import { useTranslation } from 'react-i18next';
 
 const BoardsMain: FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -15,18 +16,19 @@ const BoardsMain: FC = () => {
     dispatch(loadBoard());
     console.log('ok');
   }, [dispatch]);
+  const { t } = useTranslation();
   return (
     <>
       <BoardsHeader>
         <Flex>
           <Open style={{ marginRight: '10px' }} />
           {` 0 `}
-          открыто
+          {t('boards.open')}
         </Flex>
         <Flex>
           <Close style={{ marginRight: '10px' }} />
           {` 0 `}
-          закрыто
+          {t('boards.close')}
         </Flex>
       </BoardsHeader>
       <BoardsList>

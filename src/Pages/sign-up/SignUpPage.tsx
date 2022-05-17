@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser, loginUser } from '../../store/reducers/userReducer';
 import { AppDispatch, RootState } from '../../store/store';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -12,7 +13,7 @@ const SignUp = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const { status } = useSelector((state: RootState) => state.user);
-
+  const { t, i18n } = useTranslation();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   };
@@ -36,56 +37,58 @@ const SignUp = () => {
       navigate('/boards');
     }
   }, [status]);
-
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('language') || 'en');
+  }, []);
   return (
     <Form
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8
+        span: 8,
       }}
       wrapperCol={{
-        span: 10
+        span: 10,
       }}
       initialValues={{
-        remember: true
+        remember: true,
       }}
       onFinish={onFinish}
       autoComplete="off"
     >
       <Form.Item
-        label="Name"
+        label={t('signUp.name')}
         name="name"
         rules={[
           {
             required: true,
-            message: 'Please input your name!'
-          }
+            message: `${t('signUp.input_name_message')}`,
+          },
         ]}
       >
         <Input value={name} onBlur={changeName} />
       </Form.Item>
       <Form.Item
-        label="Login"
+        label={t('signUp.login')}
         name="login"
         rules={[
           {
             required: true,
-            message: 'Please input your login!'
-          }
+            message: `${t('signUp.input_login_message')}`,
+          },
         ]}
       >
         <Input value={login} onBlur={changeLogin} />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label={t('signUp.password')}
         name="password"
         rules={[
           {
             required: true,
-            message: 'Please input your password!'
-          }
+            message: `${t('signUp.input_password_message')}`,
+          },
         ]}
       >
         <Input.Password value={password} onBlur={changePassword} />
@@ -96,23 +99,23 @@ const SignUp = () => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>{t('signUp.remember_me')}</Checkbox>
       </Form.Item>
 
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
         }}
       >
         {status === 'loading' ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
-            Create
+            {t('welcomPage.sign_up')}
           </Button>
         )}
       </Form.Item>
