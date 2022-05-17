@@ -1,14 +1,17 @@
-import React, { FocusEvent, useEffect } from 'react';
+import React, { FocusEvent, useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginChange, loginUser, passwordChange } from '../../store/reducers/userReducer';
+import { loginUser } from '../../store/reducers/userReducer';
 import { RootState } from '../../store/store';
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
-  const { login, password, status } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const { status } = useSelector((state: RootState) => state.user);
+
   const onFinish = () => {
     dispatch(loginUser({ login, password }));
   };
@@ -16,10 +19,10 @@ const Login = (): JSX.Element => {
     return <Alert message="Incorrect username or password entered." type="error" />;
   };
   const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
-    dispatch(loginChange(ev.target.value));
+    setLogin(ev.target.value);
   };
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
-    dispatch(passwordChange(ev.target.value));
+    setPassword(ev.target.value);
   };
 
   useEffect(() => {
@@ -27,6 +30,7 @@ const Login = (): JSX.Element => {
       navigate('/boards');
     }
   }, [status]);
+
   return (
     <Form
       style={{ marginTop: '10%' }}

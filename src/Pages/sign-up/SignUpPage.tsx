@@ -2,39 +2,41 @@ import React, { useState, FocusEvent, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createUser,
-  loginChange,
-  loginUser,
-  nameChange,
-  passwordChange
-} from '../../store/reducers/userReducer';
-import { RootState } from '../../store/store';
+import { createUser, loginUser } from '../../store/reducers/userReducer';
+import { AppDispatch, RootState } from '../../store/store';
 
 const SignUp = () => {
-  const { name, login, password, status } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const { status } = useSelector((state: RootState) => state.user);
+
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
-    dispatch(nameChange(ev.target.value));
+    setName(ev.target.value);
   };
   const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
-    dispatch(loginChange(ev.target.value));
+    setLogin(ev.target.value);
   };
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
-    dispatch(passwordChange(ev.target.value));
+    setPassword(ev.target.value);
   };
 
-  const onFinish = async () => {
-    await dispatch(createUser({ name, login, password }));
-    return <Alert message="Success Text" type="success" />;
+  const onFinish = () => {
+    try {
+      dispatch(createUser({ name, login, password }));
+      return <Alert message="Success Text" type="success" />;
+    } catch (err) {}
   };
+
   useEffect(() => {
     if (status === 'success') {
       dispatch(loginUser({ login, password }));
       navigate('/boards');
     }
   }, [status]);
+
   return (
     <Form
       style={{ marginTop: '10%' }}
