@@ -49,7 +49,7 @@ export const WelcomePage: React.FC = () => {
               <Row
                 gutter={[
                   { xs: 0, sm: 0, md: 16, lg: 16 },
-                  { xs: 16, sm: 16, md: 0, lg: 0 },
+                  { xs: 16, sm: 16, md: 0, lg: 0 }
                 ]}
               >
                 {developerCardList}

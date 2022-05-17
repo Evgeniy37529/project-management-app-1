@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/reducers/userReducer';
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const { status } = useSelector((state: RootState) => state.user);
@@ -40,13 +40,13 @@ const Login = (): JSX.Element => {
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8,
+        span: 8
       }}
       wrapperCol={{
-        span: 10,
+        span: 10
       }}
       initialValues={{
-        remember: true,
+        remember: true
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -58,8 +58,8 @@ const Login = (): JSX.Element => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_login_message')}`,
-          },
+            message: `${t('signUp.input_login_message')}`
+          }
         ]}
       >
         <Input value={login} onBlur={changeLogin} />
@@ -71,8 +71,8 @@ const Login = (): JSX.Element => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_password_message')}`,
-          },
+            message: `${t('signUp.input_password_message')}`
+          }
         ]}
       >
         <Input.Password value={password} onBlur={changePassword} />
@@ -83,7 +83,7 @@ const Login = (): JSX.Element => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         <Checkbox>{t('signUp.remember_me')}</Checkbox>
@@ -92,7 +92,7 @@ const Login = (): JSX.Element => {
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         {status === 'loading' ? (

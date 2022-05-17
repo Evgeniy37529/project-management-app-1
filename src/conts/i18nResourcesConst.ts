@@ -5,9 +5,9 @@ export const defaultNS = 'translationEN';
 
 export const resources = {
   en: {
-    translation: translationEN,
+    translation: translationEN
   },
   ru: {
-    translation: translationRU,
-  },
+    translation: translationRU
+  }
 };

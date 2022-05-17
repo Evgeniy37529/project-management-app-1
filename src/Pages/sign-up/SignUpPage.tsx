@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from '../../store/store';
 import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
@@ -45,13 +45,13 @@ const SignUp = () => {
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8,
+        span: 8
       }}
       wrapperCol={{
-        span: 10,
+        span: 10
       }}
       initialValues={{
-        remember: true,
+        remember: true
       }}
       onFinish={onFinish}
       autoComplete="off"
@@ -62,8 +62,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_name_message')}`,
-          },
+            message: `${t('signUp.input_name_message')}`
+          }
         ]}
       >
         <Input value={name} onBlur={changeName} />
@@ -74,8 +74,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_login_message')}`,
-          },
+            message: `${t('signUp.input_login_message')}`
+          }
         ]}
       >
         <Input value={login} onBlur={changeLogin} />
@@ -87,8 +87,8 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_password_message')}`,
-          },
+            message: `${t('signUp.input_password_message')}`
+          }
         ]}
       >
         <Input.Password value={password} onBlur={changePassword} />
@@ -99,7 +99,7 @@ const SignUp = () => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         <Checkbox>{t('signUp.remember_me')}</Checkbox>
@@ -108,7 +108,7 @@ const SignUp = () => {
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         {status === 'loading' ? (

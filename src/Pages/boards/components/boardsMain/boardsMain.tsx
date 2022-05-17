@@ -9,12 +9,11 @@ import { loadBoard } from '../../../../store/reducers/boardsReducer';
 import { useTranslation } from 'react-i18next';
 
 const BoardsMain: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { boards } = useSelector((state: RootState) => state.boards);
 
   useEffect(() => {
     dispatch(loadBoard());
-    console.log('ok');
   }, [dispatch]);
   const { t } = useTranslation();
   return (
