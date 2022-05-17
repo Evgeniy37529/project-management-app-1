@@ -11,8 +11,8 @@ const initialState = {
   status: ''
 };
 export const createUser = createAsyncThunk(
-  'createUser',
-  async (userData: { name: string; login: string; password: string }, { rejectWithValue }) => {
+  'user/createUser',
+  (userData: { name: string; login: string; password: string }, { rejectWithValue }) => {
     const { name, login, password } = userData;
     return instance
       .post('/signup', { name, login, password })
@@ -21,7 +21,7 @@ export const createUser = createAsyncThunk(
   }
 );
 export const loginUser = createAsyncThunk(
-  'loginUser',
+  'user/loginUser',
   (userData: { login: string; password: string }, { rejectWithValue, dispatch }) => {
     const { login, password } = userData;
     return instance
@@ -43,41 +43,39 @@ export const userSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(createUser.pending.type, (state: IState) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(createUser.fulfilled.type, (state: IState) => {
-        state.status = 'success';
-      })
-      .addCase(
-        createUser.rejected.type,
-        (state: IState, action: { type: string; payload: string }) => {
-          state.status = 'error';
-          state.error = action.payload;
-        }
-      );
+    builder.addCase(createUser.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(createUser.fulfilled.type, (state: IState) => {
+      state.status = 'success';
+    });
+    builder.addCase(
+      createUser.rejected.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'error';
+        state.error = action.payload;
+      }
+    );
 
-    builder
-      .addCase(loginUser.pending.type, (state: IState) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(
-        loginUser.fulfilled.type,
-        (state: IState, action: { type: string; payload: { token: string } }) => {
-          state.status = 'success';
-          state.token = action.payload.token;
-        }
-      )
-      .addCase(
-        loginUser.rejected.type,
-        (state: IState, action: { type: string; payload: string }) => {
-          state.status = 'error';
-          state.error = action.payload;
-        }
-      );
+    builder.addCase(loginUser.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(
+      loginUser.fulfilled.type,
+      (state: IState, action: { type: string; payload: { token: string } }) => {
+        state.status = 'success';
+        state.token = action.payload.token;
+      }
+    );
+    builder.addCase(
+      loginUser.rejected.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'error';
+        state.error = action.payload;
+      }
+    );
   }
 });
 export const { tokenChange } = userSlice.actions;
