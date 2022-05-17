@@ -12,6 +12,7 @@ const HeaderAuthorisingUser = () => {
     localStorage.removeItem('token');
     navigate('/');
   };
+  const goToEditProfile = () => navigate('/change-profile');
 
   return (
     <PageHeader
@@ -21,13 +22,13 @@ const HeaderAuthorisingUser = () => {
         <Button key="Create new board" icon={<PlusCircleOutlined />}>
           {t('header.create_new_board')}
         </Button>,
-        <Button key="login" icon={<SettingOutlined />}>
+        <Button key="login" icon={<SettingOutlined />} onClick={goToEditProfile}>
           {t('header.edit_profile')}
         </Button>,
         <Button key="sign-up" danger icon={<ExportOutlined />} onClick={exit}>
           {t('header.sign_out')}
         </Button>,
-        <SwitcherLanguage key="language" />,
+        <SwitcherLanguage key="language" />
       ]}
     />
   );

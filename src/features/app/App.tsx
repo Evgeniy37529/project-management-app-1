@@ -7,6 +7,7 @@ import './App.css';
 import Header from '../../Components/header/Header.component';
 import Boards from '../../Pages/boards/boards';
 import Board from '../../Pages/board/board';
+import EditProfile from '../../Pages/editProfile/EditProfilePage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/welcome" />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/change-profile" element={<EditProfile />} />
         <Route path="*" />
       </Routes>
       <Outlet />
