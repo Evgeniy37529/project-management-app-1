@@ -47,7 +47,7 @@ const EditProfilePage = () => {
         name="new name"
         rules={[{ required: true, message: `${t('editProfile.input_name_message')}` }]}
       >
-        <Input onBlur={changeName} />
+        <Input value={newName} onBlur={changeName} />
       </Form.Item>
 
       <Form.Item
@@ -55,14 +55,14 @@ const EditProfilePage = () => {
         name="new login"
         rules={[{ required: true, message: `${t('editProfile.input_login_message')}` }]}
       >
-        <Input.Password onBlur={changeLogin} />
+        <Input.Password value={newLogin} onBlur={changeLogin} />
       </Form.Item>
       <Form.Item
         label={t('editProfile.password')}
         name="new password"
         rules={[{ required: true, message: `${t('editProfile.input_password_message')}` }]}
       >
-        <Input.Password onBlur={changePassword} />
+        <Input.Password value={newPassword} onBlur={changePassword} />
       </Form.Item>
       <Form.Item {...FORM_BUTTON_LAYOUT}>
         <Button
