@@ -2,32 +2,7 @@ import React, { useState, FocusEvent, useEffect } from 'react';
 import { Button, Form, Input, Alert, Spin, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import type { FormInstance } from 'antd/es/form';
-
-// const layout = {
-//   //labelCol: { span: 8 },
-//   //wrapperCol: { span: 16 }
-// };
-const tailFormItemLayout = {
-  wrapperCol: {
-    xl: {
-      span: 16,
-      offset: 8
-    },
-    md: {
-      span: 10,
-      offset: 8
-    },
-    xs: {
-      span: 10,
-      offset: 0
-    },
-    sm: {
-      span: 10,
-      offset: 8
-    }
-  }
-};
+import { FORM_BUTTON_LAYOUT } from '../../conts/editProfileConst';
 
 const EditProfilePage = () => {
   const [newName, setNewName] = useState('');
@@ -89,7 +64,7 @@ const EditProfilePage = () => {
       >
         <Input.Password onBlur={changePassword} />
       </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
+      <Form.Item {...FORM_BUTTON_LAYOUT}>
         <Button
           style={{ marginRight: '10px', marginBottom: '10px' }}
           type="primary"
@@ -101,7 +76,7 @@ const EditProfilePage = () => {
           {t('editProfile.delete_user')}
         </Button>
       </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
+      <Form.Item {...FORM_BUTTON_LAYOUT}>
         <Button type="primary" onClick={() => navigate(-1)}>
           {t('editProfile.cancel')}
         </Button>
