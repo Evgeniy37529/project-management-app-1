@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const backgroundImage = require('../../assets/img/bg.jpg');
 
 export const Page = styled.div`
    {
-    padding: 20px 20px 0 20px;
+    padding: 35x 20px 0 20px;
     box-shadow: inset 10px 10px 100px 432px rgba(227, 227, 220, 0.66);
     background: url(${backgroundImage}) center/cover;
   }
@@ -15,6 +15,35 @@ export const AuthButtons = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
+    top: 10px;
+    transition: 'all 0.5s ease';
+  }
+`;
+
+const smoothScroll = keyframes`
+0% {
+  transform: translateY(20px);
+}
+
+100% {
+  transform: translateY(0px);
+  background-color: #ffffff92;
+  padding-bottom: 15px;
+}
+`;
+export const StickyHeader = styled.div<{ sticky: boolean }>`
+   {
+    padding: 25px;
+    position: ${(props) => props.sticky && 'sticky'};
+    top: ${(props) => props.sticky && '-15px'};
+    width: ${(props) => props.sticky && '100%'};
+    background-color: ${(props) => (props.sticky ? '#ffffff' : 'transparent')};
+    animation: ${(props) =>
+      props.sticky &&
+      css`
+        ${smoothScroll} 0.7s forwards
+      `};
+    z-index: 99;
   }
 `;
 
