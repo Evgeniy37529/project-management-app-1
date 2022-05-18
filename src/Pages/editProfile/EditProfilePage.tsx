@@ -8,7 +8,6 @@ const EditProfilePage = () => {
   const [newName, setNewName] = useState('');
   const [newLogin, setNewLogin] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [buttonActive, setButtonActive] = useState(false);
   const { t, i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
