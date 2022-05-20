@@ -75,7 +75,7 @@ export const Settings = styled.div`
 
 export const SettingsButton = styled.button`
   border: none;
-  padding 7px 14px;
+  padding: 7px 14px;
   color: white;
   margin: 5px 0 0 0;
   border-radius: 10px;

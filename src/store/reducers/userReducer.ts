@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IState } from '../../types/userType';
 import instance from '../../api/axiosInstance';
-import { AppThunk } from '../store';
 
 const initialState = {
   name: '',

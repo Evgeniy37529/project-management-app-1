@@ -1,38 +1,32 @@
 import { FC, useEffect } from 'react';
 import { BoardsHeader, BoardsList, Flex } from './styled';
 import { ReactComponent as Open } from '../../../../assets/svg/open.svg';
-import { ReactComponent as Close } from '../../../../assets/svg/close.svg';
 import BoardsItem from '../boardsItem/boardsItem';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadBoard } from '../../../../store/reducers/boardsReducer';
+import { loadBoards } from '../../../../store/reducers/boardsReducer';
 import { useTranslation } from 'react-i18next';
 
 const BoardsMain: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { boards } = useSelector((state: RootState) => state.boards);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(loadBoard());
-  }, [dispatch]);
-  const { t } = useTranslation();
+    dispatch(loadBoards());
+  }, [boards]);
   return (
     <>
       <BoardsHeader>
         <Flex>
           <Open style={{ marginRight: '10px' }} />
-          {` 0 `}
+          {` ${boards.length} `}
           {t('boards.open')}
-        </Flex>
-        <Flex>
-          <Close style={{ marginRight: '10px' }} />
-          {` 0 `}
-          {t('boards.close')}
         </Flex>
       </BoardsHeader>
       <BoardsList>
-        {boards.map(({ title, description }, i) => (
-          <BoardsItem key={i} title={title} description={description} />
+        {boards.map(({ id, title }) => (
+          <BoardsItem key={title} title={title} id={id} />
         ))}
       </BoardsList>
     </>

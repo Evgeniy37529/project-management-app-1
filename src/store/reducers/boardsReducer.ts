@@ -15,7 +15,7 @@ const initialState = {
   boards: []
 };
 
-export const loadBoard = createAsyncThunk('board/createBoard', (_, { rejectWithValue }) => {
+export const loadBoards = createAsyncThunk('boards/loadBoards', (_, { rejectWithValue }) => {
   return instance
     .get(`/boards`)
     .then((data) => data.data)
@@ -27,19 +27,19 @@ export const boardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loadBoard.pending.type, (state: IState) => {
+    builder.addCase(loadBoards.pending.type, (state: IState) => {
       state.status = 'loading';
       state.error = null;
     });
     builder.addCase(
-      loadBoard.fulfilled.type,
+      loadBoards.fulfilled.type,
       (state: IState, action: { type: string; payload: IBoard[] }) => {
         state.status = 'success';
         state.error = null;
         state.boards = action.payload;
       }
     );
-    builder.addCase(loadBoard.rejected.type, (state: IState) => {
+    builder.addCase(loadBoards.rejected.type, (state: IState) => {
       state.status = 'error';
       state.error = true;
     });
