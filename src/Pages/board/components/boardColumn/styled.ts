@@ -32,14 +32,13 @@ export const TitleStyled = styled.h3`
 `;
 
 export const CardStyled = styled.div`
-  margin: 15px 0;
+  border-bottom: 5px solid #e5e5e5;
   padding: 8px;
-  border-radius: 5px;
+  border-radius: 5px 5px 8px 8px;
   background: white;
   word-wrap: break-word;
   color: #5c4f4f;
   cursor: pointer;
-  transition: all 0.3s;
 
   &:hover {
     background: #dbd5d5;
@@ -85,4 +84,11 @@ export const SettingsButton = styled.button`
   &:hover {
     color: #000;
   }
+`;
+
+export const TaskList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  min-height: 5px;
 `;

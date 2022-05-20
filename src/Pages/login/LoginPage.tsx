@@ -18,7 +18,7 @@ const Login = (): JSX.Element => {
     axios
       .post('https://fierce-reef-60064.herokuapp.com/signin', {
         login: login,
-        password: password,
+        password: password
       })
       .then((data) => {
         if (data.data.token) {
@@ -53,13 +53,13 @@ const Login = (): JSX.Element => {
       style={{ marginTop: '10%' }}
       name="basic"
       labelCol={{
-        span: 8,
+        span: 8
       }}
       wrapperCol={{
-        span: 10,
+        span: 10
       }}
       initialValues={{
-        remember: true,
+        remember: true
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -71,8 +71,8 @@ const Login = (): JSX.Element => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_login_message')}`,
-          },
+            message: `${t('signUp.input_login_message')}`
+          }
         ]}
       >
         <Input value={login} onBlur={changeLogin} />
@@ -84,8 +84,8 @@ const Login = (): JSX.Element => {
         rules={[
           {
             required: true,
-            message: `${t('signUp.input_password_message')}`,
-          },
+            message: `${t('signUp.input_password_message')}`
+          }
         ]}
       >
         <Input.Password value={password} onBlur={changePassword} />
@@ -96,7 +96,7 @@ const Login = (): JSX.Element => {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         <Checkbox>{t('signUp.remember_me')}</Checkbox>
@@ -105,7 +105,7 @@ const Login = (): JSX.Element => {
       <Form.Item
         wrapperCol={{
           offset: 8,
-          span: 16,
+          span: 16
         }}
       >
         {buttonActive ? (
