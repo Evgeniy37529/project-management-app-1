@@ -14,7 +14,7 @@ const BoardsMain: FC = () => {
 
   useEffect(() => {
     dispatch(loadBoards());
-  }, [boards]);
+  }, []);
   return (
     <>
       <BoardsHeader>
@@ -25,8 +25,8 @@ const BoardsMain: FC = () => {
         </Flex>
       </BoardsHeader>
       <BoardsList>
-        {boards.map(({ id, title }) => (
-          <BoardsItem key={title} title={title} id={id} />
+        {boards.map(({ id, title, description }) => (
+          <BoardsItem key={title} title={title} id={id} description={description} />
         ))}
       </BoardsList>
     </>

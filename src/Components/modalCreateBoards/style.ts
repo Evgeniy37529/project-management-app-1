@@ -21,6 +21,14 @@ export const BoardNamePlace = styled.input`
   height: 50px;
   margin-bottom: 20px;
 `;
+export const BoardDescriptionPlace = styled.input`
+  padding-left: 10px;
+  border-radius: 13px;
+  border: 1px solid gray;
+  width: 90%;
+  height: 50px;
+  margin-bottom: 20px;
+`;
 export const ButtonAddBoard = styled.button`
   border-radius: 50px;
   border: none;

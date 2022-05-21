@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../api/axiosInstance';
+import { createNewBoard, deleteBoardById, getAllBoards } from '../../api/boards';
 
 export interface IState {
   status?: string;
@@ -9,23 +10,43 @@ export interface IState {
 export interface IBoard {
   id: string;
   title: string;
+  description: string;
 }
 const initialState = {
   state: '',
+  currentId: '',
   boards: []
 };
 
-export const loadBoards = createAsyncThunk('boards/loadBoards', (_, { rejectWithValue }) => {
-  return instance
-    .get(`/boards`)
-    .then((data) => data.data)
-    .catch((error) => rejectWithValue(error.message));
+export const loadBoards = createAsyncThunk('boards/loadBoards', () => getAllBoards());
+
+export const createBoard = createAsyncThunk(
+  'board/createBoard',
+  ({ title, description }: { title: string; description: string }) =>
+    createNewBoard({ title, description })
+);
+export const getBoardById = createAsyncThunk('board/getBoard', (id: string) => {
+  return instance(`/boards/${id}`).then((data) => data);
 });
+export const deleteBoard = createAsyncThunk('board/deleteBoard', (id: string) => {
+  deleteBoardById(id);
+  return id;
+});
+export const updateBoard = createAsyncThunk(
+  'board/updateBoard',
+  ({ id, title }: { id: string; title: string }) => {
+    return instance.put(`/boards/${id}`, title).then((data) => data);
+  }
+);
 
 export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
-  reducers: {},
+  reducers: {
+    boardsChangeDelete: (state: IState, action) => {
+      state.boards = state.boards?.filter((el) => el.id !== action.payload);
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(loadBoards.pending.type, (state: IState) => {
       state.status = 'loading';
@@ -43,7 +64,64 @@ export const boardsSlice = createSlice({
       state.status = 'error';
       state.error = true;
     });
+    builder.addCase(createBoard.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(
+      createBoard.fulfilled.type,
+      (state: IState, action: { type: string; payload: IBoard }) => {
+        state.status = 'success';
+        state.error = null;
+        state.boards?.push(action.payload);
+      }
+    );
+    builder.addCase(createBoard.rejected.type, (state: IState) => {
+      state.status = 'error';
+      state.error = true;
+    });
+    builder.addCase(deleteBoard.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(
+      deleteBoard.fulfilled.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'success';
+        state.error = null;
+        boardsChangeDelete(action.payload);
+      }
+    );
+    builder.addCase(deleteBoard.rejected.type, (state: IState) => {
+      state.status = 'error';
+      state.error = true;
+    });
+    builder.addCase(getBoardById.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(getBoardById.fulfilled.type, (state: IState) => {
+      state.status = 'success';
+      state.error = null;
+    });
+    builder.addCase(getBoardById.rejected.type, (state: IState) => {
+      state.status = 'error';
+      state.error = true;
+    });
+    builder.addCase(updateBoard.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(updateBoard.fulfilled.type, (state: IState) => {
+      state.status = 'success';
+      state.error = null;
+    });
+    builder.addCase(updateBoard.rejected.type, (state: IState) => {
+      state.status = 'error';
+      state.error = true;
+    });
   }
 });
+export const { boardsChangeDelete } = boardsSlice.actions;
 
 export default boardsSlice.reducer;
