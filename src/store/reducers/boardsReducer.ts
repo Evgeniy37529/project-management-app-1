@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../api/axiosInstance';
-import { createNewBoard, deleteBoardById, getAllBoards } from '../../api/boards';
+import { createNewBoard, deleteBoardById, getAllBoards, getInfoBoardById } from '../../api/boards';
 
 export interface IState {
   status?: string;
@@ -15,7 +15,8 @@ export interface IBoard {
 const initialState = {
   state: '',
   currentId: '',
-  boards: []
+  boards: [],
+  currentBoard: {}
 };
 
 export const loadBoards = createAsyncThunk('boards/loadBoards', () => getAllBoards());
@@ -26,7 +27,7 @@ export const createBoard = createAsyncThunk(
     createNewBoard({ title, description })
 );
 export const getBoardById = createAsyncThunk('board/getBoard', (id: string) => {
-  return instance(`/boards/${id}`).then((data) => data);
+  return getInfoBoardById(id);
 });
 export const deleteBoard = createAsyncThunk('board/deleteBoard', (id: string) => {
   deleteBoardById(id);
@@ -100,10 +101,14 @@ export const boardsSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     });
-    builder.addCase(getBoardById.fulfilled.type, (state: IState) => {
-      state.status = 'success';
-      state.error = null;
-    });
+    builder.addCase(
+      getBoardById.fulfilled.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'success';
+        console.log(action.payload);
+        state.error = null;
+      }
+    );
     builder.addCase(getBoardById.rejected.type, (state: IState) => {
       state.status = 'error';
       state.error = true;

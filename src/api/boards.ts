@@ -12,4 +12,6 @@ export const getAllBoards = () => {
 export const deleteBoardById = (id: string) => {
   return instance.delete(`${BOARDS_BASE_URL}/${id}`);
 };
-export const getInfoBoardById = () => {};
+export const getInfoBoardById = (id: string) => {
+  return instance(`/boards/${id}`).then((data) => data.data);
+};
