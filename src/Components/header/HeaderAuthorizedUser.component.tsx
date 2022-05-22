@@ -27,7 +27,7 @@ const HeaderAuthorisingUser = () => {
         <Button key="sign-up" danger icon={<ExportOutlined />} onClick={exit}>
           {t('header.sign_out')}
         </Button>,
-        <SwitcherLanguage key="language" />,
+        <SwitcherLanguage key="language" />
       ]}
     />
   );

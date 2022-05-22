@@ -6,7 +6,7 @@ import { resources } from './conts/i18nResourcesConst';
 i18n.use(initReactI18next).init({
   lng: 'en',
   resources,
-  fallbackLng: 'en',
+  fallbackLng: 'en'
 });
 
 export default i18n;
