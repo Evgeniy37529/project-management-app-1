@@ -34,6 +34,17 @@
         "create_new_board": "Create new board",
         "edit_profile": "Edit profile",
         "sign_out": "Sign Out"
+    },
+    "editProfile": {
+        "name": "New name",
+        "login": "New login",
+        "password": "New password",
+        "input_name_message": "Please input your new name!",
+        "input_login_message": "Please input your new login!",
+        "input_password_message": "Please input your new password!",
+        "save_changes": "Save changes",
+        "delete_user": "Delete user",
+        "cancel": "Cancel"
     }   
     
 
