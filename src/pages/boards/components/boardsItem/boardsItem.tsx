@@ -1,28 +1,16 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { BoardsItemStyled, ShortField } from './styled';
 import { ReactComponent as Trash } from '../../../../assets/svg/trash.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../../store/store';
-import {
-  boardsChangeDelete,
-  deleteBoard,
-  getBoardById
-} from '../../../../store/reducers/boardsReducer';
-import { loadBoards } from '../../../../store/reducers/boardsReducer';
-import { Link, useParams } from 'react-router-dom';
-import Board from '../../../board/board';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../store/store';
+import { deleteBoard, getBoardById } from '../../../../store/reducers/boards';
+import { Link } from 'react-router-dom';
+import { PropsBoardsItem } from '../../../../types/boards';
 
-interface Props {
-  title: string;
-  id: string;
-  description: string;
-}
-
-const BoardsItem: FC<Props> = ({ id, title, description }) => {
+const BoardsItem: FC<PropsBoardsItem> = ({ id, title, description }) => {
   const dispatch = useDispatch<AppDispatch>();
   const deleteCurrentBoard = () => {
     dispatch(deleteBoard(id));
-    dispatch(boardsChangeDelete(id));
   };
   const requestCurrentInfoBoard = () => {
     dispatch(getBoardById(id));

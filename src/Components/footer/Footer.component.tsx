@@ -1,7 +1,7 @@
 import React from 'react';
 import { FooterBlock, FooterLogoGithub } from './styled';
-import { LINK_GITHUB_PAGES } from '../../conts/footerConst';
-import { LINK_LOGO_GITHUB } from '../../conts/footerConst';
+import { LINK_GITHUB_PAGES } from '../../constants/footerConst';
+import { LINK_LOGO_GITHUB } from '../../constants/footerConst';
 
 const Footer = () => {
   return (

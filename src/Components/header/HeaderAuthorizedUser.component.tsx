@@ -15,7 +15,8 @@ const HeaderAuthorisingUser = () => {
     localStorage.removeItem('token');
     navigate('/');
   };
-  const switcherModalCreateBoard = () => {
+
+  const toggleModalCreated = () => {
     setVisibleState(!visibleState);
   };
 
@@ -24,11 +25,7 @@ const HeaderAuthorisingUser = () => {
       className="site-page-header-responsive"
       style={{ backgroundColor: theme.colors.whiteMatt }}
       extra={[
-        <Button
-          key="Create new board"
-          icon={<PlusCircleOutlined />}
-          onClick={switcherModalCreateBoard}
-        >
+        <Button key="Create new board" icon={<PlusCircleOutlined />} onClick={toggleModalCreated}>
           {t('header.create_new_board')}
         </Button>,
         <Button key="login" icon={<SettingOutlined />}>
@@ -40,7 +37,7 @@ const HeaderAuthorisingUser = () => {
         <SwitcherLanguage key="language" />,
         <ModalWindowCreateBoard
           visible={visibleState}
-          changeVisible={switcherModalCreateBoard}
+          changeVisible={toggleModalCreated}
           key="modalCreateBoard"
         />
       ]}

@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import BoardsColumn from '../boardColumn/boardsColumn';
 import { AddColumn, AddColumnWrapper, BoardWrapperStyled } from './styled';
-import { exampleCardObj } from '../../../../conts/boardCardConst';
-import { exampleCardObjSecond } from '../../../../conts/boardCardConst';
+import { exampleCardObj } from '../../../../constants/boardCardConst';
+import { exampleCardObjSecond } from '../../../../constants/boardCardConst';
 import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
 import { useTranslation } from 'react-i18next';
 

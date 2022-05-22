@@ -5,7 +5,7 @@ const instance = axios.create();
 instance.interceptors.request.use(
   function (config) {
     config.headers = { ...config.headers, Authorization: `Bearer ${localStorage.token}` };
-    config.baseURL = 'https://quiet-ravine-48148.herokuapp.com';
+    config.baseURL = 'https://rsschool-final-task.herokuapp.com';
     return config;
   },
   function (error) {

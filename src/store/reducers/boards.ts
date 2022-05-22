@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../api/axiosInstance';
 import { createNewBoard, deleteBoardById, getAllBoards, getInfoBoardById } from '../../api/boards';
+import { IBoard } from '../../types/boards';
 
 export interface IState {
   status?: string;
   error?: null | boolean;
   boards?: IBoard[];
 }
-export interface IBoard {
-  id: string;
-  title: string;
-  description: string;
-}
+
 const initialState = {
-  state: '',
+  status: '',
   currentId: '',
   boards: [],
   currentBoard: {}
@@ -90,7 +87,7 @@ export const boardsSlice = createSlice({
       (state: IState, action: { type: string; payload: string }) => {
         state.status = 'success';
         state.error = null;
-        boardsChangeDelete(action.payload);
+        state.boards = state.boards?.filter((el) => el.id !== action.payload);
       }
     );
     builder.addCase(deleteBoard.rejected.type, (state: IState) => {

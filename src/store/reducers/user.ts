@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IState } from '../../types/userType';
+import { IState } from '../../types/user';
 import instance from '../../api/axiosInstance';
 
-const initialState = {
+const initialState: IState = {
   name: '',
   login: '',
   password: '',
   token: '',
   status: ''
 };
+
 export const createUser = createAsyncThunk(
   'user/createUser',
   (userData: { name: string; login: string; password: string }, { rejectWithValue }) => {

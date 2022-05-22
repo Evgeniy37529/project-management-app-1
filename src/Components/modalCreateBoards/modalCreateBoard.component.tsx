@@ -7,9 +7,10 @@ import {
   ButtonCloseModal
 } from './style';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { createBoard } from '../../store/reducers/boardsReducer';
+import { AppDispatch } from '../../store/store';
+import { createBoard } from '../../store/reducers/boards';
 import { Spin } from 'antd';
+import { boardsSelector } from '../../store/selectors/boards';
 
 const ModalWindowCreateBoard = ({
   visible,
@@ -20,7 +21,7 @@ const ModalWindowCreateBoard = ({
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const { status } = useSelector((state: RootState) => state.board);
+  const { status } = useSelector(boardsSelector);
 
   const changeTitle = (ev: FocusEvent<HTMLInputElement>) => {
     setTitle(ev.target.value);
@@ -29,7 +30,7 @@ const ModalWindowCreateBoard = ({
     setDescription(ev.target.value);
   };
   const dispatch = useDispatch<AppDispatch>();
-  const postCreateBord = () => {
+  const postCreateBoard = () => {
     dispatch(createBoard({ title, description }));
     changeVisible();
   };
@@ -41,7 +42,7 @@ const ModalWindowCreateBoard = ({
       {status === 'loading' ? (
         <Spin />
       ) : (
-        <ButtonAddBoard onClick={postCreateBord}>create</ButtonAddBoard>
+        <ButtonAddBoard onClick={postCreateBoard}>create</ButtonAddBoard>
       )}
     </BlockModalWindow>
   );

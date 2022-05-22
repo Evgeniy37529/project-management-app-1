@@ -4,17 +4,18 @@ import { ReactComponent as Open } from '../../../../assets/svg/open.svg';
 import BoardsItem from '../boardsItem/boardsItem';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadBoards } from '../../../../store/reducers/boardsReducer';
+import { loadBoards } from '../../../../store/reducers/boards';
 import { useTranslation } from 'react-i18next';
+import { boardsSelector } from '../../../../store/selectors/boards';
 
 const BoardsMain: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { boards } = useSelector((state: RootState) => state.boards);
+  const { boards } = useSelector(boardsSelector);
   const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(loadBoards());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <BoardsHeader>

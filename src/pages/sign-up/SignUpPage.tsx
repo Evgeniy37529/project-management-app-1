@@ -1,45 +1,40 @@
 import React, { useState, FocusEvent, useEffect } from 'react';
-import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
+import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser, loginUser } from '../../store/reducers/userReducer';
+import { createUser, loginUser } from '../../store/reducers/user';
 import { AppDispatch, RootState } from '../../store/store';
 import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [userInfo, setUserInfo] = useState<{ name: string; login: string; password: string }>({
+    name: '',
+    login: '',
+    password: ''
+  });
   const { status } = useSelector((state: RootState) => state.user);
   const { t, i18n } = useTranslation();
-  const changeName = (ev: FocusEvent<HTMLInputElement>) => {
-    setName(ev.target.value);
-  };
-  const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
-    setLogin(ev.target.value);
-  };
-  const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
-    setPassword(ev.target.value);
+  const changeUserInfo = (ev: FocusEvent<HTMLInputElement>) => {
+    setUserInfo({ ...userInfo, [ev.target.name]: ev.target.value });
   };
 
   const onFinish = () => {
     try {
-      dispatch(createUser({ name, login, password }));
-      return <Alert message="Success Text" type="success" />;
+      dispatch(createUser(userInfo));
     } catch (err) {}
   };
 
   useEffect(() => {
     if (status === 'success') {
-      dispatch(loginUser({ login, password }));
+      dispatch(loginUser({ login: userInfo.login, password: userInfo.password }));
       navigate('/boards');
     }
-  }, [status]);
+  }, [status, dispatch, navigate]);
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
-  }, []);
+  }, [i18n]);
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -58,7 +53,6 @@ const SignUp = () => {
     >
       <Form.Item
         label={t('signUp.name')}
-        name="name"
         rules={[
           {
             required: true,
@@ -66,11 +60,10 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input value={name} onBlur={changeName} />
+        <Input name="name" onBlur={changeUserInfo} />
       </Form.Item>
       <Form.Item
         label={t('signUp.login')}
-        name="login"
         rules={[
           {
             required: true,
@@ -78,12 +71,11 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input value={login} onBlur={changeLogin} />
+        <Input name="login" onBlur={changeUserInfo} />
       </Form.Item>
 
       <Form.Item
         label={t('signUp.password')}
-        name="password"
         rules={[
           {
             required: true,
@@ -91,7 +83,7 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input.Password value={password} onBlur={changePassword} />
+        <Input.Password name="password" onBlur={changeUserInfo} />
       </Form.Item>
 
       <Form.Item
