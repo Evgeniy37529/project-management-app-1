@@ -17,7 +17,6 @@ const HeaderAuthorisingUser = () => {
     navigate('/');
   };
   const goToEditProfile = () => navigate('/change-profile');
-  const goToEditProfile = () => navigate('/change-profile');
 
   useEffect(() => {
     const header = headerRef.current.getBoundingClientRect();
