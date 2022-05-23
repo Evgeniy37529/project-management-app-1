@@ -4,7 +4,7 @@ import { Page, AuthButtons, AboutProject, CardWrapper } from './styled';
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { SwitcherLanguage } from '../../Components/switcherLanguage/SwitcherLanguage';
+import { SwitcherLanguage } from '../../components/switcherLanguage/SwitcherLanguage';
 import { DEVELOPER_CARDS_INFO } from '../../constants/developerCardConst';
 
 const { Title, Paragraph } = Typography;

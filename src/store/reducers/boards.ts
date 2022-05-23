@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import instance from '../../api/axiosInstance';
-import { createNewBoard, deleteBoardById, getAllBoards, getInfoBoardById } from '../../api/boards';
+import {
+  createNewBoard,
+  deleteBoardById,
+  getAllBoards,
+  getInfoBoardById,
+  updateBoardData
+} from '../../api/boards';
 import { IBoard } from '../../types/boards';
 
 export interface IState {
@@ -33,7 +38,7 @@ export const deleteBoard = createAsyncThunk('board/deleteBoard', (id: string) =>
 export const updateBoard = createAsyncThunk(
   'board/updateBoard',
   ({ id, title }: { id: string; title: string }) => {
-    return instance.put(`/boards/${id}`, title).then((data) => data);
+    return updateBoardData({ id, title });
   }
 );
 

@@ -13,5 +13,8 @@ export const deleteBoardById = (id: string) => {
   return instance.delete(`${BOARDS_BASE_URL}/${id}`);
 };
 export const getInfoBoardById = (id: string) => {
-  return instance(`/boards/${id}`).then((data) => data.data);
+  return instance(`${BOARDS_BASE_URL}/${id}`).then((data) => data.data);
+};
+export const updateBoardData = ({ id, title }: { id: string; title: string }) => {
+  return instance.put(`${BOARDS_BASE_URL}/${id}`, title).then((data) => data);
 };

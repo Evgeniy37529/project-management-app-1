@@ -12,6 +12,7 @@ export const BlockModalWindow = styled.div<{ visible: boolean }>`
   border-radius: 13px;
   border: 1px solid gray;
   justify-content: center;
+  z-index: 3;
 `;
 export const BoardNamePlace = styled.input`
   padding-left: 10px;

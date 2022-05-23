@@ -1,10 +1,10 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Login from '../pages/login/LoginPage';
 import SignUp from '../pages/sign-up/SignUpPage';
-import Footer from '../Components/footer/Footer.component';
+import Footer from '../components/footer/Footer.component';
 import { WelcomePage } from '../pages/WelcomPage/WelcomPage';
 import './App.css';
-import Header from '../Components/header/Header.component';
+import Header from '../components/header/Header.component';
 import Boards from '../pages/boards/boards';
 import Board from '../pages/board/board';
 

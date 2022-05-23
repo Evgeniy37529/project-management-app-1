@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IState } from '../../types/user';
-import instance from '../../api/axiosInstance';
+import { deleteUser, signInUser, signUpUser, updateInfo } from '../../api/users';
 
 const initialState: IState = {
   name: '',
@@ -12,26 +12,23 @@ const initialState: IState = {
 
 export const createUser = createAsyncThunk(
   'user/createUser',
-  (userData: { name: string; login: string; password: string }, { rejectWithValue }) => {
-    const { name, login, password } = userData;
-    return instance
-      .post('/signup', { name, login, password })
-      .then((data) => data)
-      .catch((error) => rejectWithValue(error.message));
+  (userData: { name: string; login: string; password: string }) => {
+    return signUpUser(userData);
   }
 );
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  (userData: { login: string; password: string }, { rejectWithValue, dispatch }) => {
-    const { login, password } = userData;
-    return instance
-      .post(`/signin`, { login, password })
-      .then((data) => {
-        dispatch(tokenChange(data.data.token));
-        localStorage.token = data.data.token;
-        return data.data;
-      })
-      .catch((error) => rejectWithValue(error.message));
+  (userData: { login: string; password: string }) => {
+    return signInUser(userData);
+  }
+);
+export const eraseUser = createAsyncThunk('user/deleteUser', (id: string) => {
+  return deleteUser(id);
+});
+export const updateInfoUser = createAsyncThunk(
+  'user/updateUser',
+  (userData: { id: string; name: string; login: string; password: string }) => {
+    return updateInfo(userData);
   }
 );
 export const userSlice = createSlice({
@@ -67,10 +64,40 @@ export const userSlice = createSlice({
       (state: IState, action: { type: string; payload: { token: string } }) => {
         state.status = 'success';
         state.token = action.payload.token;
+        tokenChange(action.payload.token);
+        localStorage.token = action.payload.token;
       }
     );
     builder.addCase(
       loginUser.rejected.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'error';
+        state.error = action.payload;
+      }
+    );
+    builder.addCase(eraseUser.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(eraseUser.fulfilled.type, (state: IState) => {
+      state.status = 'success';
+    });
+    builder.addCase(
+      eraseUser.rejected.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'error';
+        state.error = action.payload;
+      }
+    );
+    builder.addCase(updateInfoUser.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(updateInfoUser.fulfilled.type, (state: IState) => {
+      state.status = 'success';
+    });
+    builder.addCase(
+      updateInfoUser.rejected.type,
       (state: IState, action: { type: string; payload: string }) => {
         state.status = 'error';
         state.error = action.payload;

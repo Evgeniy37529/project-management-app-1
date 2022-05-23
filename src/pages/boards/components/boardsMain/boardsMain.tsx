@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { BoardsHeader, BoardsList, Flex } from './styled';
 import { ReactComponent as Open } from '../../../../assets/svg/open.svg';
 import BoardsItem from '../boardsItem/boardsItem';
-import { AppDispatch, RootState } from '../../../../store/store';
+import { AppDispatch } from '../../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadBoards } from '../../../../store/reducers/boards';
 import { useTranslation } from 'react-i18next';

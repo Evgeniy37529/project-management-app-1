@@ -18,7 +18,9 @@ const BoardsItem: FC<PropsBoardsItem> = ({ id, title, description }) => {
   return (
     <BoardsItemStyled id={id}>
       <Link to={`/boards/${id}`}>
-        <ShortField onClick={requestCurrentInfoBoard}>{title}</ShortField>
+        <ShortField onClick={requestCurrentInfoBoard} style={{ width: '100%' }}>
+          {title}
+        </ShortField>
       </Link>
       <ShortField style={{ width: '300px' }}>{description}</ShortField>
       <ShortField>
