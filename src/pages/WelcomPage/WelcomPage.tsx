@@ -1,37 +1,54 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Row, Typography, Layout, Button } from 'antd';
-import { Page, AuthButtons, AboutProject, CardWrapper } from './styled';
+import { Page, AuthButtons, AboutProject, CardWrapper, StickyHeader } from './styled';
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { SwitcherLanguage } from '../../components/switcherLanguage/SwitcherLanguage';
 import { DEVELOPER_CARDS_INFO } from '../../constants/developerCardConst';
+import { handleScroll } from '../../components/header/stickyFunction/stickyFunction';
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
 
 export const WelcomePage: React.FC = () => {
+  const headerRef = useRef<any>(null);
+  const [isSticky, setIsSticky] = useState(false);
+
   const { t, i18n } = useTranslation();
   const developerCardList = DEVELOPER_CARDS_INFO.map(({ id, name, role, avatar }) => (
     <DeveloperCard key={id} name={i18n.t(name)} role={i18n.t(role)} avatar={avatar} />
   ));
 
+  useEffect(() => {
+    const header = headerRef.current.getBoundingClientRect();
+    const handleScrollEvent = () => {
+      handleScroll(header.top, setIsSticky);
+    };
+    window.addEventListener('scroll', handleScrollEvent);
+    return () => {
+      window.removeEventListener('scroll', handleScrollEvent);
+    };
+  }, []);
+
   return (
     <Layout className="layout">
-      <Page>
-        <AuthButtons>
-          <Link to="/login">
-            <Button style={{ marginRight: '10px' }} type="primary" ghost>
-              {t('welcomPage.sign_in')}
-            </Button>
-          </Link>
-          <Link to="/sign-up">
-            <Button style={{ marginRight: '10px' }} type="primary" ghost>
-              {t('welcomPage.sign_up')}
-            </Button>
-          </Link>
-          <SwitcherLanguage />
-        </AuthButtons>
+      <Page ref={headerRef}>
+        <StickyHeader sticky={isSticky}>
+          <AuthButtons>
+            <Link to="/login">
+              <Button style={{ marginRight: '10px' }} type="primary" ghost>
+                {t('welcomPage.sign_in')}
+              </Button>
+            </Link>
+            <Link to="/sign-up">
+              <Button style={{ marginRight: '10px' }} type="primary" ghost>
+                {t('welcomPage.sign_up')}
+              </Button>
+            </Link>
+            <SwitcherLanguage />
+          </AuthButtons>
+        </StickyHeader>
         <Content className="container">
           <AboutProject>
             <Title style={{ fontSize: 'calc(1rem + 2vw)', textAlign: 'center' }} level={1}>

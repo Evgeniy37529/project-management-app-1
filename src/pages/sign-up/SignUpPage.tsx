@@ -1,40 +1,63 @@
 import React, { useState, FocusEvent, useEffect } from 'react';
-import { Button, Checkbox, Form, Input, Spin } from 'antd';
+import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { createUser, loginUser } from '../../store/reducers/user';
-import { AppDispatch, RootState } from '../../store/store';
 import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<{ name: string; login: string; password: string }>({
-    name: '',
-    login: '',
-    password: ''
-  });
-  const { status } = useSelector((state: RootState) => state.user);
+  const [name, setName] = useState('');
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [buttonActive, setButtonActive] = useState(false);
   const { t, i18n } = useTranslation();
-  const changeUserInfo = (ev: FocusEvent<HTMLInputElement>) => {
-    setUserInfo({ ...userInfo, [ev.target.name]: ev.target.value });
-  };
-
-  const onFinish = () => {
-    try {
-      dispatch(createUser(userInfo));
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    if (status === 'success') {
-      dispatch(loginUser({ login: userInfo.login, password: userInfo.password }));
-      navigate('/boards');
-    }
-  }, [status, dispatch, navigate]);
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
-  }, [i18n]);
+  }, []);
+  const changeName = (ev: FocusEvent<HTMLInputElement>) => {
+    setName(ev.target.value);
+  };
+  const changeLogin = (ev: FocusEvent<HTMLInputElement>) => {
+    setLogin(ev.target.value);
+  };
+  const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
+    setPassword(ev.target.value);
+  };
+  const loader = () => {
+    setButtonActive(!buttonActive);
+  };
+  const navigate = useNavigate();
+  const createAccount = () => {
+    axios
+      .post('https://fierce-reef-60064.herokuapp.com/signup', {
+        name: name,
+        login: login,
+        password: password
+      })
+      .then((data) => {
+        if (data.status === 201) {
+          loader();
+          axios
+            .post('https://fierce-reef-60064.herokuapp.com/signin', {
+              login: login,
+              password: password
+            })
+            .then((data) => {
+              if (data.data.token) {
+                localStorage.token = data.data.token;
+                navigate('/boards');
+              }
+              loader();
+            })
+            .catch((err) => {
+              setButtonActive(false);
+            });
+        }
+      });
+  };
+  const onFinish = () => {
+    createAccount();
+    return <Alert message="Success Text" type="success" />;
+  };
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -53,6 +76,7 @@ const SignUp = () => {
     >
       <Form.Item
         label={t('signUp.name')}
+        name="name"
         rules={[
           {
             required: true,
@@ -60,10 +84,11 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input name="name" onBlur={changeUserInfo} />
+        <Input value={name} onBlur={changeName} />
       </Form.Item>
       <Form.Item
         label={t('signUp.login')}
+        name="login"
         rules={[
           {
             required: true,
@@ -71,11 +96,12 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input name="login" onBlur={changeUserInfo} />
+        <Input value={login} onBlur={changeLogin} />
       </Form.Item>
 
       <Form.Item
         label={t('signUp.password')}
+        name="password"
         rules={[
           {
             required: true,
@@ -83,7 +109,7 @@ const SignUp = () => {
           }
         ]}
       >
-        <Input.Password name="password" onBlur={changeUserInfo} />
+        <Input.Password value={password} onBlur={changePassword} />
       </Form.Item>
 
       <Form.Item
@@ -103,7 +129,7 @@ const SignUp = () => {
           span: 16
         }}
       >
-        {status === 'loading' ? (
+        {buttonActive ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
