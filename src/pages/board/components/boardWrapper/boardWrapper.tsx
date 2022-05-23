@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import BoardsColumn from '../boardColumn/boardsColumn';
 import { AddColumn, AddColumnWrapper, BoardWrapperStyled } from './styled';
-import { initialData } from '../../../../conts/boardCardConst';
+import { initialData } from '../../../../constants/boardCardConst';
 import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';

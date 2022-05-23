@@ -1,13 +1,13 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
-import Login from '../../Pages/login/LoginPage';
-import SignUp from '../../Pages/sign-up/SignUpPage';
-import Footer from '../../Components/footer/Footer.component';
-import { WelcomePage } from '../../Pages/WelcomPage/WelcomPage';
+import Login from '../pages/login/LoginPage';
+import SignUp from '../pages/sign-up/SignUpPage';
+import Footer from '../components/footer/Footer.component';
+import { WelcomePage } from '../pages/WelcomPage/WelcomPage';
 import './App.css';
-import Header from '../../Components/header/Header.component';
-import Boards from '../../Pages/boards/boards';
-import Board from '../../Pages/board/board';
-import EditProfile from '../../Pages/editProfile/EditProfilePage';
+import Header from '../components/header/Header.component';
+import Boards from '../pages/boards/boards';
+import Board from '../pages/board/board';
+import EditProfile from '../pages/editProfile/EditProfilePage';
 
 const App = () => {
   return (

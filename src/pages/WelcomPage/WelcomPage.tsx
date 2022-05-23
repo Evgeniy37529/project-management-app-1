@@ -4,9 +4,9 @@ import { Page, AuthButtons, AboutProject, CardWrapper, StickyHeader } from './st
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { SwitcherLanguage } from '../../Components/switcherLanguage/SwitcherLanguage';
-import { DEVELOPER_CARDS_INFO } from '../../conts/developerCardConst';
-import { handleScroll } from '../../Components/header/stickyFunction/stickyFunction';
+import { SwitcherLanguage } from '../../components/switcherLanguage/SwitcherLanguage';
+import { DEVELOPER_CARDS_INFO } from '../../constants/developerCardConst';
+import { handleScroll } from '../../components/header/stickyFunction/stickyFunction';
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
