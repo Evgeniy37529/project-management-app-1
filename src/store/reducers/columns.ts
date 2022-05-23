@@ -34,7 +34,7 @@ export const updateColumn = createAsyncThunk(
 );
 
 export const columnsSlice = createSlice({
-  name: 'user',
+  name: 'columns',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

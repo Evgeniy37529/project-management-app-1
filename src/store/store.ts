@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import boardsReducer from './reducers/boards';
 import userReducer from './reducers/user';
+import columnsReducer from './reducers/columns';
+import tasksReducer from './reducers/tasks';
 
 export const store = configureStore({
   reducer: {
     boards: boardsReducer,
-    user: userReducer
+    user: userReducer,
+    columns: columnsReducer,
+    tasks: tasksReducer
   }
 });
 

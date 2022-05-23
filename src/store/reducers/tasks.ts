@@ -15,20 +15,20 @@ const initialState: IState = {
   tasks: []
 };
 
-export const getAllTasks = createAsyncThunk('columns/getAllColumns', () => {
+export const getAllTasks = createAsyncThunk('tasks/getAllTasks', () => {
   return loadAllTasks();
 });
-export const createTasks = createAsyncThunk('columns/createColumns', (title: string) => {
+export const createTasks = createAsyncThunk('tasks/createTasks', (title: string) => {
   return createNewTask({ title });
 });
-export const getTaskById = createAsyncThunk('columns/getColumnById', (idColumn: string) => {
+export const getTaskById = createAsyncThunk('tasks/getTaskById', (idColumn: string) => {
   return getInfoTaskById(idColumn);
 });
-export const deleteTask = createAsyncThunk('columns/deleteColumn', (idColumn: string) => {
+export const deleteTask = createAsyncThunk('tasks/deleteTask', (idColumn: string) => {
   return deleteTaskById(idColumn);
 });
 export const updateTask = createAsyncThunk(
-  'columns/updateColumn',
+  'tasks/updateTask',
   (columnData: {
     id: string;
     title: string;
@@ -43,7 +43,7 @@ export const updateTask = createAsyncThunk(
 );
 
 export const tasksSlice = createSlice({
-  name: 'user',
+  name: 'tasks',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
