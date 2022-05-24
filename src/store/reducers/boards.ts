@@ -107,7 +107,6 @@ export const boardsSlice = createSlice({
       getBoardById.fulfilled.type,
       (state: IState, action: { type: string; payload: string }) => {
         state.status = 'success';
-        console.log(action.payload);
         state.error = null;
       }
     );
