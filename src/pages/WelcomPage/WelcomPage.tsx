@@ -36,7 +36,7 @@ export const WelcomePage: React.FC = () => {
       <Page ref={headerRef}>
         <StickyHeader sticky={isSticky}>
           <AuthButtons>
-            <Link to="login">
+            <Link to="/login">
               <Button style={{ marginRight: '10px' }} type="primary" ghost>
                 {t('welcomPage.sign_in')}
               </Button>

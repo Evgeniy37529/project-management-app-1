@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BoardsHeader = styled.div`
-  margin 10px 20px 0 20px;
+  margin: 10px 20px 0 20px;
   padding: 0 50px;
   height: 84px;
   display: flex;
@@ -19,7 +19,7 @@ export const Flex = styled.div`
 `;
 
 export const BoardsList = styled.ul`
-  margin 0 20px;
+  margin: 0 20px;
   padding: 30px 50px;
   height: 475px;
   background: #e5e5e5;

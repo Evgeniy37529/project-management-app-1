@@ -20,7 +20,15 @@ export const BoardsItemStyled = styled.li`
 `;
 
 export const ShortField = styled.div`
-  text-align: center;
-  width: 100px;
+  text-align: left;
+  width: 33%;
+  height: 100%;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  svg {
+    position: absolute;
+    right: 10px;
+  }
 `;

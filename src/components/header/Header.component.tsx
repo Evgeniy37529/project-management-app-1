@@ -6,16 +6,12 @@ import HeaderLoginSignUpPage from './HeaderLoginSignUpPage.component';
 const Header = () => {
   const location = useLocation();
 
-  const renderHeader = () => {
-    if (localStorage.getItem('token')) {
-      return <HeaderAuthorisingUser />;
-    }
-    if (location.pathname === '/') {
-      return <></>;
-    }
-    return <HeaderLoginSignUpPage />;
-  };
-
-  return <>{renderHeader()}</>;
+  if (localStorage.token) {
+    return <HeaderAuthorisingUser />;
+  }
+  if (location.pathname === '/') {
+    return null;
+  }
+  return <HeaderLoginSignUpPage />;
 };
 export default Header;
