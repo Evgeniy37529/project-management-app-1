@@ -1,11 +1,7 @@
 import { FC, useState } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import CustomModal from '../../../../components/modal/modal';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { Data } from '../boardWrapper/boardWrapper';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { CardCross, CardStyled } from './styled';
 
 interface Props {
