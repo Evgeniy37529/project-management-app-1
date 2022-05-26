@@ -6,6 +6,12 @@ import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
+export interface Data {
+  tasks: { [key: string]: { id: string; content: string } };
+  columns: { [key: string]: { id: string; title: string; taskIds: string[] } };
+  columnOrder: string[];
+}
+
 const BoardWrapper: FC = () => {
   const { t } = useTranslation();
   const [state, setState] = useState(initialData);
@@ -81,6 +87,7 @@ const BoardWrapper: FC = () => {
         [newForeign.id]: newForeign
       }
     };
+    console.log(newState);
     setState(newState);
   };
 
@@ -94,7 +101,16 @@ const BoardWrapper: FC = () => {
                 const column = state.columns[columnId];
                 const tasks = column.taskIds.map((taskId: string) => state.tasks[taskId]);
 
-                return <BoardsColumn key={column.id} column={column} tasks={tasks} index={i} />;
+                return (
+                  <BoardsColumn
+                    currentState={state}
+                    setNewState={(newState: Data) => setState(newState)}
+                    key={column.id}
+                    column={column}
+                    tasks={tasks}
+                    index={i}
+                  />
+                );
               })}
               <AddColumnWrapper>
                 <Plus style={{ marginRight: '10px' }} />

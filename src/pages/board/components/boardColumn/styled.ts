@@ -31,20 +31,6 @@ export const TitleStyled = styled.h3`
   color: #000;
 `;
 
-export const CardStyled = styled.div`
-  border-bottom: 5px solid #e5e5e5;
-  padding: 8px;
-  border-radius: 5px 5px 8px 8px;
-  background: white;
-  word-wrap: break-word;
-  color: #5c4f4f;
-  cursor: pointer;
-
-  &:hover {
-    background: #dbd5d5;
-  }
-`;
-
 export const AddCardWrapper = styled.div`
   display: flex;
   justify-content: space-around;
@@ -68,8 +54,8 @@ export const Settings = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 15px;
-  top: -14px;
+  right: -18px;
+  top: -20px;
 `;
 
 export const SettingsButton = styled.button`
