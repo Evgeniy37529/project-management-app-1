@@ -2,17 +2,29 @@ import { FC, useState } from 'react';
 import { BoardsItemStyled, ShortField } from './styled';
 import { ReactComponent as Trash } from '../../../../assets/svg/trash.svg';
 import CustomModal from '../../../../components/modal/modal';
+import { Link } from 'react-router-dom';
+import { AppDispatch } from '../../../../store/store';
+import { useDispatch } from 'react-redux';
+import { deleteBoard, getBoardById } from '../../../../store/reducers/boards';
+getBoardById;
 
 interface Props {
+  id: string;
   title: string;
   description: string;
 }
 
-const BoardsItem: FC<Props> = ({ title, description }) => {
+const BoardsItem: FC<Props> = ({ id, title, description }) => {
   const [modalVisible, setIsModalVisible] = useState(false);
-
+  const dispatch = useDispatch<AppDispatch>();
+  const deleteCurrentBoard = () => {
+    dispatch(deleteBoard(id));
+  };
+  const requestCurrentInfoBoard = () => {
+    dispatch(getBoardById(id));
+  };
   return (
-    <BoardsItemStyled>
+    <BoardsItemStyled id={id}>
       <CustomModal
         modalVisible={modalVisible}
         setIsModalVisible={(toggle: boolean) => setIsModalVisible(toggle)}
@@ -23,10 +35,12 @@ const BoardsItem: FC<Props> = ({ title, description }) => {
         taskId=""
         columnId=""
       />
-      <ShortField>{title}</ShortField>
+      <Link to={`/boards/${id}`}>
+        <ShortField onClick={requestCurrentInfoBoard}>{title}</ShortField>
+      </Link>
       <ShortField style={{ width: '300px' }}>{description}</ShortField>
       <ShortField>
-        <Trash onClick={() => setIsModalVisible(true)} style={{ cursor: 'pointer' }} />
+        <Trash style={{ cursor: 'pointer' }} onClick={deleteCurrentBoard} />
       </ShortField>
     </BoardsItemStyled>
   );
