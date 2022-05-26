@@ -73,10 +73,14 @@ export const columnsSlice = createSlice({
         state.error = action.payload;
       }
     );
-    builder.addCase(deleteColumn.pending.type, (state: IState) => {
-      state.status = 'loading';
-      state.error = null;
-    });
+    builder.addCase(
+      deleteColumn.pending.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'loading';
+        state.error = null;
+        state.columns.filter((el) => el.id !== action.payload);
+      }
+    );
     builder.addCase(deleteColumn.fulfilled.type, (state: IState) => {
       state.status = 'success';
     });

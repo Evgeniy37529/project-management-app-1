@@ -97,9 +97,14 @@ export const tasksSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     });
-    builder.addCase(deleteTask.fulfilled.type, (state: IState) => {
-      state.status = 'success';
-    });
+    builder.addCase(
+      deleteTask.fulfilled.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'loading';
+        state.error = null;
+        state.tasks.filter((el) => el.id !== action.payload);
+      }
+    );
     builder.addCase(
       deleteTask.rejected.type,
       (state: IState, action: { type: string; payload: string }) => {
@@ -113,6 +118,7 @@ export const tasksSlice = createSlice({
     });
     builder.addCase(updateTask.fulfilled.type, (state: IState) => {
       state.status = 'success';
+      getAllTasks();
     });
     builder.addCase(
       updateTask.rejected.type,
