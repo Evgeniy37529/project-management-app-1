@@ -1,5 +1,5 @@
 import instance from './axiosInstance';
-const boardsId = '';
+const boardsId = localStorage.getItem('currentBoardId');
 const COLUMNS_BASE_URL = `/boards/${boardsId}/columns`;
 
 export const createNewColumns = ({ title }: { title: string }) => {

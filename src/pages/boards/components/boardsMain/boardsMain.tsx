@@ -26,8 +26,8 @@ const BoardsMain: FC = () => {
         </Flex>
       </BoardsHeader>
       <BoardsList>
-        {boards.map(({ title, description }, i) => (
-          <BoardsItem key={i} title={title} description={description} />
+        {boards.map(({ id, title, description }, i) => (
+          <BoardsItem id={id} key={i} title={title} description={description} />
         ))}
       </BoardsList>
     </>

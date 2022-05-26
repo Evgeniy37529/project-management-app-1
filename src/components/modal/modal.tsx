@@ -1,6 +1,10 @@
 import { Modal } from 'antd';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { Data } from '../../pages/board/components/boardWrapper/boardWrapper';
+import { deleteColumn } from '../../store/reducers/columns';
+import { deleteTask } from '../../store/reducers/tasks';
+import { AppDispatch } from '../../store/store';
 
 interface Props {
   modalVisible: boolean;
@@ -23,21 +27,25 @@ const CustomModal: FC<Props> = ({
   columnId,
   taskId
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleOk = () => {
     setIsModalVisible(false);
     if (type === 'column' && currentState && setNewState) {
-      const newState = JSON.parse(JSON.stringify(currentState));
-      delete newState.columns[columnId];
-      newState.columnOrder.splice(newState.columnOrder.indexOf(columnId), 1);
-      setNewState(newState);
+      dispatch(deleteColumn(columnId));
+      // const newState = JSON.parse(JSON.stringify(currentState));
+      // delete newState.columns[columnId];
+      // newState.columnOrder.splice(newState.columnOrder.indexOf(columnId), 1);
+      // setNewState(newState);
     } else if (type === 'item' && currentState && setNewState) {
-      const newState = JSON.parse(JSON.stringify(currentState));
-      delete newState.tasks[taskId];
-      newState.columns[columnId].taskIds.splice(
-        newState.columns[columnId].taskIds.indexOf(taskId),
-        1
-      );
-      setNewState(newState);
+      dispatch(deleteTask({ columnId: columnId, taskId: taskId }));
+      // const newState = JSON.parse(JSON.stringify(currentState));
+      // delete newState.tasks[taskId];
+      // newState.columns[columnId].taskIds.splice(
+      //   newState.columns[columnId].taskIds.indexOf(taskId),
+      //   1
+      // );
+      // setNewState(newState);
     }
   };
 

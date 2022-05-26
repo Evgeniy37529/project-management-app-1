@@ -24,9 +24,12 @@ export const createTasks = createAsyncThunk('tasks/createTasks', (title: string)
 export const getTaskById = createAsyncThunk('tasks/getTaskById', (idColumn: string) => {
   return getInfoTaskById(idColumn);
 });
-export const deleteTask = createAsyncThunk('tasks/deleteTask', (idColumn: string) => {
-  return deleteTaskById(idColumn);
-});
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
+  ({ columnId, taskId }: { columnId: string; taskId: string }) => {
+    return deleteTaskById(columnId, taskId);
+  }
+);
 export const updateTask = createAsyncThunk(
   'tasks/updateTask',
   (columnData: {

@@ -1,10 +1,17 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import BoardsColumn from '../boardColumn/boardsColumn';
 import { AddColumn, AddColumnWrapper, BoardWrapperStyled } from './styled';
 import { initialData } from '../../../../constants/boardCardConst';
 import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useSelector } from 'react-redux';
+import { tasksSelector } from '../../../../store/selectors/tasks';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../store/store';
+import { getAllTasks } from '../../../../store/reducers/tasks';
+import { columnsSelector } from '../../../../store/selectors/columns';
+import { getAllColumns } from '../../../../store/reducers/columns';
 
 export interface Data {
   tasks: { [key: string]: { id: string; content: string } };
@@ -15,6 +22,29 @@ export interface Data {
 const BoardWrapper: FC = () => {
   const { t } = useTranslation();
   const [state, setState] = useState(initialData);
+
+  const { tasks } = useSelector(tasksSelector);
+  const { columns } = useSelector(columnsSelector);
+  const columnOrder = columns.map((column) => column.id);
+
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getAllTasks());
+    dispatch(getAllColumns());
+
+    const obj: Data = {
+      tasks: {},
+      columns: {},
+      columnOrder: []
+    };
+    tasks.forEach((task) => {
+      obj.tasks[task.id] = { id: task.id, content: task.title };
+    });
+    // columns.forEach((column) => {
+    //   obj.columns[columns.id] = { id: task.id, content: task.title };
+    // });
+    // setState({ tasks, columns, columnOrder });
+  }, []);
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;

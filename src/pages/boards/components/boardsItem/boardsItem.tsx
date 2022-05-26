@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { BoardsItemStyled, ShortField } from './styled';
 import { ReactComponent as Trash } from '../../../../assets/svg/trash.svg';
 import CustomModal from '../../../../components/modal/modal';
@@ -23,6 +23,11 @@ const BoardsItem: FC<Props> = ({ id, title, description }) => {
   const requestCurrentInfoBoard = () => {
     dispatch(getBoardById(id));
   };
+
+  useEffect(() => {
+    localStorage.setItem('currentBoardId', id);
+  }, []);
+
   return (
     <BoardsItemStyled id={id}>
       <CustomModal
