@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import './reset.css';
-import App from './features/app/App';
+import App from './app/App';
 import 'antd/dist/antd.css';
 import './i18n';
 

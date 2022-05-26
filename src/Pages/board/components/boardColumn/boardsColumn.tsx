@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import {
   AddCard,
   AddCardWrapper,
-  CardStyled,
   ColumnWrapper,
   Settings,
   SettingsButton,
@@ -12,6 +11,9 @@ import {
 import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
 import { Droppable, Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import type { DroppableProvided } from 'react-beautiful-dnd';
+import CustomModal from '../../../../Components/modal/modal';
+import { Data } from '../boardWrapper/boardWrapper';
+import BoardItem from '../boardItem/boardItem';
 
 interface Props {
   tasks: {
@@ -24,10 +26,13 @@ interface Props {
     taskIds: string[];
   };
   index: number;
+  currentState: Data;
+  setNewState: (newState: Data) => void;
 }
 
-const BoardsColumn: FC<Props> = ({ tasks, column, index }) => {
-  const [togle, srtTogle] = useState(false);
+const BoardsColumn: FC<Props> = ({ tasks, column, index, currentState, setNewState }) => {
+  const [toggle, setToggle] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -38,16 +43,26 @@ const BoardsColumn: FC<Props> = ({ tasks, column, index }) => {
               <TitleStyled {...provided.dragHandleProps}>{column.title}</TitleStyled>
               <span
                 style={{ fontSize: '26px', fontWeight: '600', cursor: 'pointer' }}
-                onClick={() => srtTogle(!togle)}
+                onClick={() => setToggle(!toggle)}
               >
                 ...
               </span>
-              {togle ? (
+              <CustomModal
+                modalVisible={modalVisible}
+                setIsModalVisible={(toggle: boolean) => setModalVisible(toggle)}
+                title={column.title}
+                currentState={currentState}
+                setNewState={setNewState}
+                taskId={'0'}
+                columnId={column.id}
+                type="column"
+              />
+              {toggle ? (
                 <Settings>
-                  <SettingsButton style={{ background: 'rgb(41 76 43)' }}>
-                    Изменить название
-                  </SettingsButton>
-                  <SettingsButton style={{ background: 'rgb(190 33 33)' }}>
+                  <SettingsButton
+                    onClick={() => setModalVisible(true)}
+                    style={{ background: 'rgb(190 33 33)' }}
+                  >
                     Удалить таблицу
                   </SettingsButton>
                 </Settings>
@@ -62,13 +77,13 @@ const BoardsColumn: FC<Props> = ({ tasks, column, index }) => {
                         <Draggable key={task.id} draggableId={task.id} index={i}>
                           {(provided: DraggableProvided) => {
                             return (
-                              <CardStyled
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                              >
-                                {task.content}
-                              </CardStyled>
+                              <BoardItem
+                                currentState={currentState}
+                                setNewState={setNewState}
+                                provided={provided}
+                                task={task}
+                                column={column}
+                              />
                             );
                           }}
                         </Draggable>

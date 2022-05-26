@@ -2,7 +2,7 @@ import React, { useState, FocusEvent, useEffect } from 'react';
 import { Button, Form, Input, Alert } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FORM_BUTTON_LAYOUT } from '../../conts/editProfileConst';
+import { FORM_BUTTON_LAYOUT } from '../../constants/editProfileConst';
 
 const EditProfilePage = () => {
   const [newName, setNewName] = useState('');

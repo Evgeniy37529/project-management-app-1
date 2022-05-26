@@ -3,7 +3,7 @@ import { BoardsHeader, BoardsList, Flex } from './styled';
 import { ReactComponent as Open } from '../../../../assets/svg/open.svg';
 import { ReactComponent as Close } from '../../../../assets/svg/close.svg';
 import BoardsItem from '../boardsItem/boardsItem';
-import { exampleLiItems } from '../../../../conts/boarsMainConst';
+import { exampleLiItems } from '../../../../constants/boarsMainConst';
 import { useTranslation } from 'react-i18next';
 
 const BoardsMain: FC = () => {
