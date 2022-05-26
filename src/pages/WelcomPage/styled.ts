@@ -20,6 +20,16 @@ export const AuthButtons = styled.div`
   }
 `;
 
+export const ButtonsContainer = styled.div`
+   {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    top: 10px;
+    transition: 'all 0.5s ease';
+  }
+`;
+
 const smoothScroll = keyframes`
 0% {
   transform: translateY(20px);

@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Row, Typography, Layout, Button } from 'antd';
-import { Page, AuthButtons, AboutProject, CardWrapper, StickyHeader } from './styled';
+import {
+  Page,
+  AuthButtons,
+  AboutProject,
+  CardWrapper,
+  StickyHeader,
+  ButtonsContainer
+} from './styled';
 import { DeveloperCard } from './Components/DeveloperCard/DeveloperCard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -14,7 +21,7 @@ const { Content } = Layout;
 export const WelcomePage: React.FC = () => {
   const headerRef = useRef<any>(null);
   const [isSticky, setIsSticky] = useState(false);
-
+  const token = localStorage.getItem('token');
   const { t, i18n } = useTranslation();
   const developerCardList = DEVELOPER_CARDS_INFO.map(({ id, name, role, avatar }) => (
     <DeveloperCard key={id} name={i18n.t(name)} role={i18n.t(role)} avatar={avatar} />
@@ -23,7 +30,7 @@ export const WelcomePage: React.FC = () => {
   useEffect(() => {
     const header = headerRef.current.getBoundingClientRect();
     const handleScrollEvent = () => {
-      handleScroll(header.top, setIsSticky);
+      !token && handleScroll(header.top, setIsSticky);
     };
     window.addEventListener('scroll', handleScrollEvent);
     return () => {
@@ -36,17 +43,27 @@ export const WelcomePage: React.FC = () => {
       <Page ref={headerRef}>
         <StickyHeader sticky={isSticky}>
           <AuthButtons>
-            <Link to="/login">
-              <Button style={{ marginRight: '10px' }} type="primary" ghost>
-                {t('welcomPage.sign_in')}
-              </Button>
-            </Link>
-            <Link to="/sign-up">
-              <Button style={{ marginRight: '10px' }} type="primary" ghost>
-                {t('welcomPage.sign_up')}
-              </Button>
-            </Link>
-            <SwitcherLanguage />
+            {!token ? (
+              <ButtonsContainer>
+                <Link to="login">
+                  <Button style={{ marginRight: '10px' }} type="primary" ghost>
+                    {t('welcomPage.sign_in')}
+                  </Button>
+                </Link>
+                <Link to="/sign-up">
+                  <Button style={{ marginRight: '10px' }} type="primary" ghost>
+                    {t('welcomPage.sign_up')}
+                  </Button>
+                </Link>
+                <SwitcherLanguage />
+              </ButtonsContainer>
+            ) : (
+              <Link to="/boards">
+                <Button type="primary" style={{ marginRight: '10px' }}>
+                  Go to main page
+                </Button>
+              </Link>
+            )}
           </AuthButtons>
         </StickyHeader>
         <Content className="container">
