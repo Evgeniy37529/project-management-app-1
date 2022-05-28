@@ -13,6 +13,8 @@ const HeaderAuthorisingUser = () => {
   const navigate = useNavigate();
   const exit = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('currentBoardId');
+    localStorage.removeItem('userId');
     navigate('/');
   };
 
