@@ -3,16 +3,19 @@ import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { createUser, loginUser } from '../../store/reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { userSelector } from '../../store/selectors/user';
 
 const SignUp = () => {
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonActive, setButtonActive] = useState(false);
+  const { status } = useSelector(userSelector);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
-  useEffect(() => {
-    i18n.changeLanguage(localStorage.getItem('language') || 'en');
-  }, []);
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   };
@@ -22,42 +25,20 @@ const SignUp = () => {
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
     setPassword(ev.target.value);
   };
-  const loader = () => {
-    setButtonActive(!buttonActive);
-  };
-  const navigate = useNavigate();
+
   const createAccount = () => {
-    axios
-      .post('https://fierce-reef-60064.herokuapp.com/signup', {
-        name: name,
-        login: login,
-        password: password
-      })
-      .then((data) => {
-        if (data.status === 201) {
-          loader();
-          axios
-            .post('https://fierce-reef-60064.herokuapp.com/signin', {
-              login: login,
-              password: password
-            })
-            .then((data) => {
-              if (data.data.token) {
-                localStorage.token = data.data.token;
-                navigate('/boards');
-              }
-              loader();
-            })
-            .catch((err) => {
-              setButtonActive(false);
-            });
-        }
+    dispatch(createUser({ name, login, password })).then(() => {
+      dispatch(loginUser({ login, password })).then(() => {
+        navigate('/boards');
       });
+    });
   };
   const onFinish = () => {
     createAccount();
-    return <Alert message="Success Text" type="success" />;
   };
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('language') || 'en');
+  }, []);
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -129,7 +110,7 @@ const SignUp = () => {
           span: 16
         }}
       >
-        {buttonActive ? (
+        {status === 'loading' ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
