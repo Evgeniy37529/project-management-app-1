@@ -21,7 +21,7 @@ export const BoardsItemStyled = styled.li`
 
 export const ShortField = styled.div`
   text-align: left;
-  width: 33%;
+
   height: 100%;
   overflow: hidden;
   position: relative;

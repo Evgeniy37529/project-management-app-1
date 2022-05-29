@@ -1,19 +1,26 @@
-import { FC, useState } from 'react';
+import { FocusEvent, useEffect, useState } from 'react';
 import {
-  AddCard,
-  AddCardWrapper,
+  BlockAddColumn,
+  ButtonAddColumn,
   ColumnWrapper,
+  EntryFieldCardTitle,
+  NextColumnWrapper,
+  SaveButtonCardTitle,
   Settings,
   SettingsButton,
   TaskList,
   TitleStyled
 } from './styled';
-import { ReactComponent as Plus } from '../../../../assets/svg/plus.svg';
-import { Droppable, Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import type { DroppableProvided } from 'react-beautiful-dnd';
 import CustomModal from '../../../../components/modal/modal';
 import { Data } from '../boardWrapper/boardWrapper';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../../../store/store';
+import { useParams } from 'react-router-dom';
+import { createColumns, getAllColumns } from '../../../../store/reducers/columns';
 import BoardItem from '../boardItem/boardItem';
+import { IColumns } from '../../../../types/columns';
+import { tasksSelector } from '../../../../store/selectors/tasks';
+import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
 
 interface Props {
   tasks: {
@@ -30,78 +37,63 @@ interface Props {
   setNewState: (newState: Data) => void;
 }
 
-const BoardsColumn: FC<Props> = ({ tasks, column, index, currentState, setNewState }) => {
-  const [toggle, setToggle] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+const BoardsColumn = ({ column }: { column: IColumns }) => {
+  const { tasks } = useSelector(tasksSelector);
+  const [columnTitle, setColumnTitle] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
+  const boardId = useParams().id;
+  const [disabled, setDisabled] = useState(false);
+
+  const disableChange = () => {
+    setDisabled(!disabled);
+  };
+  const nameEntryTask = (ev: FocusEvent<HTMLInputElement>) => {
+    setColumnTitle(ev.target.value);
+  };
+  const addNewTask = () => {
+    if (boardId) dispatch(createTasks({ columnId: column.id, boardId, title: columnTitle }));
+    disableChange();
+  };
+  const inputCleaning = (ev: FocusEvent<HTMLInputElement>) => {
+    ev.target.value = '';
+  };
+  useEffect(() => {
+    if (boardId) dispatch(getAllTasks({ boardId, columnId: column.id }));
+  }, [dispatch]);
 
   return (
-    <Draggable draggableId={column.id} index={index}>
-      {(provided) => {
-        return (
-          <ColumnWrapper {...provided.draggableProps} ref={provided.innerRef}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
-              <TitleStyled {...provided.dragHandleProps}>{column.title}</TitleStyled>
-              <span
-                style={{ fontSize: '26px', fontWeight: '600', cursor: 'pointer' }}
-                onClick={() => setToggle(!toggle)}
-              >
-                ...
-              </span>
-              <CustomModal
-                modalVisible={modalVisible}
-                setIsModalVisible={(toggle: boolean) => setModalVisible(toggle)}
-                title={column.title}
-                currentState={currentState}
-                setNewState={setNewState}
-                taskId={'0'}
-                columnId={column.id}
-                type="column"
-              />
-              {toggle ? (
-                <Settings>
-                  <SettingsButton
-                    onClick={() => setModalVisible(true)}
-                    style={{ background: 'rgb(190 33 33)' }}
-                  >
-                    Удалить таблицу
-                  </SettingsButton>
-                </Settings>
-              ) : null}
-            </div>
-            <Droppable droppableId={column.id}>
-              {(provided: DroppableProvided) => {
-                return (
-                  <TaskList {...provided.droppableProps} ref={provided.innerRef}>
-                    {tasks.map((task, i) => {
-                      return (
-                        <Draggable key={task.id} draggableId={task.id} index={i}>
-                          {(provided: DraggableProvided) => {
-                            return (
-                              <BoardItem
-                                currentState={currentState}
-                                setNewState={setNewState}
-                                provided={provided}
-                                task={task}
-                                column={column}
-                              />
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
-                  </TaskList>
-                );
-              }}
-            </Droppable>
-            <AddCardWrapper>
-              <Plus />
-              <AddCard>Добавить карточку</AddCard>
-            </AddCardWrapper>
-          </ColumnWrapper>
-        );
-      }}
-    </Draggable>
+    <ColumnWrapper>
+      <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
+        <TitleStyled>{column.title}</TitleStyled>
+
+        <CustomModal
+          title={column.title}
+          taskId={'0'}
+          columnId={column.id}
+          type="column"
+          boardId={boardId ? boardId : ''}
+        />
+      </div>
+      {tasks.map((el) => {
+        if (el.columnId === column.id) {
+          return <BoardItem columnId={column.id} task={el} key={el.id} />;
+        }
+      })}
+      <NextColumnWrapper>
+        <BlockAddColumn>
+          <ButtonAddColumn onClick={disableChange} disabled={disabled} />
+          <EntryFieldCardTitle
+            ref={(input) => input && input.focus()}
+            type="text"
+            onChange={nameEntryTask}
+            onBlur={inputCleaning}
+            disabled={!disabled}
+            placeholder={disabled ? 'Введите текст' : 'Добавить таск'}
+          />
+          <SaveButtonCardTitle disabled={!disabled} onClick={addNewTask} />
+        </BlockAddColumn>
+      </NextColumnWrapper>
+    </ColumnWrapper>
   );
 };
 

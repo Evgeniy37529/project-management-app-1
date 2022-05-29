@@ -2,7 +2,10 @@ import instance from './axiosInstance';
 
 export const signUpUser = (userData: { name: string; login: string; password: string }) => {
   const { name, login, password } = userData;
-  return instance.post('/signup', { name, login, password }).then((data) => data);
+  return instance.post('/signup', { name, login, password }).then((data) => {
+    localStorage.setItem('userId', data.data.id);
+    return data.data;
+  });
 };
 export const signInUser = (userData: { login: string; password: string }) => {
   const { login, password } = userData;

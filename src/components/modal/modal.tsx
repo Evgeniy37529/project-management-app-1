@@ -1,67 +1,66 @@
-import { Modal } from 'antd';
-import { FC } from 'react';
+import { Button, Modal } from 'antd';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Data } from '../../pages/board/components/boardWrapper/boardWrapper';
-import { deleteColumn } from '../../store/reducers/columns';
-import { deleteTask } from '../../store/reducers/tasks';
+import { columnDeleteById, deleteColumn } from '../../store/reducers/columns';
+import { deleteTask, taskDeleteById } from '../../store/reducers/tasks';
 import { AppDispatch } from '../../store/store';
+import { useParams } from 'react-router-dom';
+import { deleteBoard } from '../../store/reducers/boards';
 
 interface Props {
-  modalVisible: boolean;
-  setIsModalVisible: (toggle: boolean) => void;
   title: string;
   type: string;
-  currentState: Data | null;
   taskId: string;
   columnId: string;
-  setNewState: ((newState: Data) => void) | null;
+  boardId: string;
 }
 
-const CustomModal: FC<Props> = ({
-  currentState,
-  setNewState,
-  modalVisible,
-  setIsModalVisible,
-  title,
-  type,
-  columnId,
-  taskId
-}) => {
+const CustomModal: FC<Props> = ({ title, type, columnId, taskId, boardId }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-    if (type === 'column' && currentState && setNewState) {
-      dispatch(deleteColumn(columnId));
-      // const newState = JSON.parse(JSON.stringify(currentState));
-      // delete newState.columns[columnId];
-      // newState.columnOrder.splice(newState.columnOrder.indexOf(columnId), 1);
-      // setNewState(newState);
-    } else if (type === 'item' && currentState && setNewState) {
-      dispatch(deleteTask({ columnId: columnId, taskId: taskId }));
-      // const newState = JSON.parse(JSON.stringify(currentState));
-      // delete newState.tasks[taskId];
-      // newState.columns[columnId].taskIds.splice(
-      //   newState.columns[columnId].taskIds.indexOf(taskId),
-      //   1
-      // );
-      // setNewState(newState);
-    }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  const handleOk = () => {
+    setIsModalVisible(false);
+
+    if (type === 'column') {
+      if (boardId) dispatch(deleteColumn({ boardId, columnId }));
+      dispatch(columnDeleteById(columnId));
+    } else if (type === 'item') {
+      if (boardId) dispatch(deleteTask({ boardId, columnId: columnId, taskId: taskId }));
+      dispatch(taskDeleteById(taskId));
+    } else if (type === 'boards') {
+      if (boardId) dispatch(deleteBoard(boardId));
+    }
+  };
 
   return (
     <>
+      <Button
+        onClick={showModal}
+        style={{
+          background: 'transparent',
+          border: 'none',
+          fontSize: '20px',
+          padding: '0'
+        }}
+      >
+        ...
+      </Button>
       <Modal
-        title="Подтверждение удаления"
-        visible={modalVisible}
+        title="Подтвердите удаление"
+        visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Вы действительно хотите удалить {title}?</p>
+        <p>Удалить {title}?</p>
       </Modal>
     </>
   );

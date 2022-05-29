@@ -1,52 +1,22 @@
-import { FC, useState } from 'react';
-import { DraggableProvided } from 'react-beautiful-dnd';
+import { useState } from 'react';
 import CustomModal from '../../../../components/modal/modal';
-import { Data } from '../boardWrapper/boardWrapper';
-import { CardCross, CardStyled } from './styled';
+import { CardCross, CardStyled, CardTitle } from './styled';
+import { ITask } from '../../../../types/tasks';
+import { useParams } from 'react-router-dom';
 
-interface Props {
-  provided: DraggableProvided;
-  task: {
-    id: string;
-    content: string;
-  };
-  column: {
-    id: string;
-    title: string;
-    taskIds: string[];
-  };
-  currentState: Data;
-  setNewState: (newState: Data) => void;
-}
-
-const BoardItem: FC<Props> = ({ currentState, setNewState, provided, task, column }) => {
+const BoardItem = ({ columnId, task }: { columnId: string; task: ITask }) => {
   const [show, setShow] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const boardID = useParams().id;
 
   return (
-    <CardStyled
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
-    >
-      {task.content}
-      <CardCross
-        onClick={() => setModalVisible(true)}
-        style={{ display: `${show ? 'block' : 'none'}` }}
-      >
-        &#10060;
-      </CardCross>
+    <CardStyled onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
+      <CardTitle>{task.title}</CardTitle>
       <CustomModal
-        modalVisible={modalVisible}
-        setIsModalVisible={(toggle: boolean) => setModalVisible(toggle)}
-        currentState={currentState}
-        setNewState={setNewState}
-        columnId={column.id}
+        columnId={columnId}
         taskId={task.id}
-        title={task.content}
+        title={task.title}
         type="item"
+        boardId={boardID ? boardID : ''}
       />
     </CardStyled>
   );

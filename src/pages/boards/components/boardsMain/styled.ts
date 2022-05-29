@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BoardsHeader = styled.div`
   margin: 10px 20px 0 20px;
-  padding: 0 50px;
+  padding: 0 100px;
   height: 84px;
   display: flex;
   align-items: center;

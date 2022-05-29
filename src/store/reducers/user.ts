@@ -64,8 +64,7 @@ export const userSlice = createSlice({
       (state: IState, action: { type: string; payload: { token: string } }) => {
         state.status = 'success';
         state.token = action.payload.token;
-        tokenChange(action.payload.token);
-        localStorage.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
       }
     );
     builder.addCase(

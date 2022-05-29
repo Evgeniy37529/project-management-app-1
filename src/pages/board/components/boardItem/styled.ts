@@ -9,12 +9,14 @@ export const CardStyled = styled.div`
   word-wrap: break-word;
   color: #5c4f4f;
   cursor: pointer;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   &:hover {
     background: #dbd5d5;
   }
 `;
-
+export const CardTitle = styled.div``;
 export const CardCross = styled.div`
   position: absolute;
   top: 8px;
