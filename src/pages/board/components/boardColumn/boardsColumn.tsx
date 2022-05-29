@@ -6,9 +6,6 @@ import {
   EntryFieldCardTitle,
   NextColumnWrapper,
   SaveButtonCardTitle,
-  Settings,
-  SettingsButton,
-  TaskList,
   TitleStyled
 } from './styled';
 import CustomModal from '../../../../components/modal/modal';
@@ -21,6 +18,8 @@ import BoardItem from '../boardItem/boardItem';
 import { IColumns } from '../../../../types/columns';
 import { tasksSelector } from '../../../../store/selectors/tasks';
 import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface Props {
   tasks: {
@@ -43,6 +42,13 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
   const dispatch = useDispatch<AppDispatch>();
   const boardId = useParams().id;
   const [disabled, setDisabled] = useState(false);
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: column.id
+  });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  };
 
   const disableChange = () => {
     setDisabled(!disabled);
@@ -62,7 +68,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
   }, [dispatch]);
 
   return (
-    <ColumnWrapper>
+    <ColumnWrapper ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
         <TitleStyled>{column.title}</TitleStyled>
 

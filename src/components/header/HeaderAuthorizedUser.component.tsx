@@ -21,6 +21,9 @@ const HeaderAuthorisingUser = () => {
   const toggleModalCreated = () => {
     setVisibleState(!visibleState);
   };
+  const redirectionToEditProfile = () => {
+    navigate('/change-profile');
+  };
 
   return (
     <PageHeader
@@ -30,7 +33,7 @@ const HeaderAuthorisingUser = () => {
         <Button key="Create new board" icon={<PlusCircleOutlined />} onClick={toggleModalCreated}>
           {t('header.create_new_board')}
         </Button>,
-        <Button key="login" icon={<SettingOutlined />}>
+        <Button key="login" icon={<SettingOutlined />} onClick={redirectionToEditProfile}>
           {t('header.edit_profile')}
         </Button>,
         <Button key="sign-up" danger icon={<ExportOutlined />} onClick={exit}>

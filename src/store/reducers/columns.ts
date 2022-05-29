@@ -38,6 +38,7 @@ export const deleteColumn = createAsyncThunk(
 export const updateColumn = createAsyncThunk(
   'columns/updateColumn',
   (columnData: { boardId: string; id: string; title: string; order: string }) => {
+    console.log(columnData);
     return updateColumnData(columnData);
   }
 );
@@ -79,7 +80,7 @@ export const columnsSlice = createSlice({
       getAllColumns.fulfilled.type,
       (state: IState, action: { type: string; payload: IColumns[] }) => {
         state.status = 'success';
-        state.columns = action.payload;
+        state.columns = action.payload.sort((a: IColumns, b: IColumns) => a.order - b.order);
       }
     );
     builder.addCase(
@@ -125,7 +126,8 @@ export const columnsSlice = createSlice({
       updateColumn.fulfilled.type,
       (state: IState, action: { type: string; payload: IColumns }) => {
         state.status = 'success';
-        state.columns.splice(action.payload.order, 0, action.payload);
+        state.columns = state.columns.filter((el) => el.id !== action.payload.id);
+        state.columns.splice(action.payload.order - 1, 0, action.payload);
       }
     );
     builder.addCase(
