@@ -7,7 +7,6 @@ export const BoardWrapperStyled = styled.div`
   margin: 30px;
   padding: 0 30px;
   overflow-x: scroll;
-
   &::-webkit-scrollbar {
     height: 8px;
     background-color: #e5e5e5;
@@ -17,6 +16,11 @@ export const BoardWrapperStyled = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(31, 112, 127, 0.5);
     border-radius: 20px;
+  }
+  @media (max-width: 1000px) {
+    overflow-y: scroll;
+    flex-direction: column;
+    overflow-x: hidden;
   }
 `;
 

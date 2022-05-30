@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IState } from '../../types/user';
-import { deleteUser, signInUser, signUpUser, updateInfo } from '../../api/users';
+import { deleteUser, signInUser, signUpUser, updateInfo, getUser } from '../../api/users';
 
 const initialState: IState = {
+  id: '',
   name: '',
   login: '',
   password: '',
@@ -31,12 +32,21 @@ export const updateInfoUser = createAsyncThunk(
     return updateInfo(userData);
   }
 );
+export const getUserById = createAsyncThunk('user/getUser', (id: string) => {
+  return getUser(id);
+});
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     tokenChange: (state: IState, action: { payload: string }) => {
       state.token = action.payload;
+    },
+    getUserId: (state: IState, action: { payload: string }) => {
+      state.id = action.payload;
+    },
+    defaultStatus: (state: IState) => {
+      state.status = '';
     }
   },
   extraReducers: (builder) => {
@@ -64,8 +74,7 @@ export const userSlice = createSlice({
       (state: IState, action: { type: string; payload: { token: string } }) => {
         state.status = 'success';
         state.token = action.payload.token;
-        tokenChange(action.payload.token);
-        localStorage.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
       }
     );
     builder.addCase(
@@ -81,6 +90,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(eraseUser.fulfilled.type, (state: IState) => {
       state.status = 'success';
+      //localStorage.removeItem('token');
     });
     builder.addCase(
       eraseUser.rejected.type,
@@ -93,11 +103,43 @@ export const userSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     });
-    builder.addCase(updateInfoUser.fulfilled.type, (state: IState) => {
-      state.status = 'success';
-    });
+    builder.addCase(
+      updateInfoUser.fulfilled.type,
+      (
+        state: IState,
+        action: { type: string; payload: { id: string; name: string; login: string } }
+      ) => {
+        state.status = 'success';
+        state.id = action.payload.id;
+        state.name = action.payload.name;
+        state.login = action.payload.login;
+      }
+    );
     builder.addCase(
       updateInfoUser.rejected.type,
+      (state: IState, action: { type: string; payload: string }) => {
+        state.status = 'error';
+        state.error = action.payload;
+      }
+    );
+    builder.addCase(getUserById.pending.type, (state: IState) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+    builder.addCase(
+      getUserById.fulfilled.type,
+      (
+        state: IState,
+        action: { type: string; payload: { id: string; login: string; name: string } }
+      ) => {
+        state.status = 'success';
+        state.name = action.payload.name;
+        state.login = action.payload.login;
+        state.id = action.payload.id;
+      }
+    );
+    builder.addCase(
+      getUserById.rejected.type,
       (state: IState, action: { type: string; payload: string }) => {
         state.status = 'error';
         state.error = action.payload;

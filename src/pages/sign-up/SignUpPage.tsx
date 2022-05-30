@@ -1,18 +1,27 @@
 import React, { useState, FocusEvent, useEffect } from 'react';
-import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
+import { Button, Checkbox, Form, Input, Alert, Spin, Grid } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { createUser, loginUser } from '../../store/reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { userSelector } from '../../store/selectors/user';
+import WarningModal from './signUpModal';
+import { stat } from 'fs';
+import { FORM_BUTTON_LAYOUT } from '../../constants/editProfileConst';
 
 const SignUp = () => {
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonActive, setButtonActive] = useState(false);
+  const { status } = useSelector(userSelector);
+  const navigate = useNavigate();
+  const [isShowError, setIsShowError] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
-  useEffect(() => {
-    i18n.changeLanguage(localStorage.getItem('language') || 'en');
-  }, []);
+  const { useBreakpoint } = Grid;
+  const { md } = useBreakpoint();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   };
@@ -22,45 +31,35 @@ const SignUp = () => {
   const changePassword = (ev: FocusEvent<HTMLInputElement>) => {
     setPassword(ev.target.value);
   };
-  const loader = () => {
-    setButtonActive(!buttonActive);
-  };
-  const navigate = useNavigate();
+
   const createAccount = () => {
-    axios
-      .post('https://fierce-reef-60064.herokuapp.com/signup', {
-        name: name,
-        login: login,
-        password: password
-      })
-      .then((data) => {
-        if (data.status === 201) {
-          loader();
-          axios
-            .post('https://fierce-reef-60064.herokuapp.com/signin', {
-              login: login,
-              password: password
-            })
-            .then((data) => {
-              if (data.data.token) {
-                localStorage.token = data.data.token;
-                navigate('/boards');
-              }
-              loader();
-            })
-            .catch((err) => {
-              setButtonActive(false);
-            });
-        }
-      });
+    dispatch(createUser({ name, login, password })).then(() => {
+      if (!isShowError) {
+        dispatch(loginUser({ login, password })).then(() => {
+          if (!isShowError) {
+            navigate('/boards');
+          }
+        });
+      }
+    });
   };
   const onFinish = () => {
     createAccount();
-    return <Alert message="Success Text" type="success" />;
   };
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('language') || 'en');
+  }, []);
+  useEffect(() => {
+    if (status === 'error') {
+      setIsShowError(true);
+      setTimeout(() => {
+        setIsShowError(false);
+      }, 3000);
+    }
+  }, [status, navigate]);
   return (
     <Form
-      style={{ marginTop: '10%' }}
+      style={{ marginTop: '10%', padding: !md ? '10px' : 0 }}
       name="basic"
       labelCol={{
         span: 8
@@ -113,23 +112,25 @@ const SignUp = () => {
       </Form.Item>
 
       <Form.Item
+        {...FORM_BUTTON_LAYOUT}
         name="remember"
         valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16
-        }}
+        // wrapperCol={{
+        //   offset: 8,
+        //   span: 8
+        // }}
       >
         <Checkbox>{t('signUp.remember_me')}</Checkbox>
       </Form.Item>
 
       <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16
-        }}
+        {...FORM_BUTTON_LAYOUT}
+        // wrapperCol={{
+        //   offset: 8,
+        //   span: 16
+        // }}
       >
-        {buttonActive ? (
+        {status === 'loading' ? (
           <Spin />
         ) : (
           <Button type="primary" htmlType="submit">
@@ -137,6 +138,7 @@ const SignUp = () => {
           </Button>
         )}
       </Form.Item>
+      {isShowError ? <WarningModal message="Такой пользователь уже существует" /> : null}
     </Form>
   );
 };

@@ -1,29 +1,32 @@
 import instance from './axiosInstance';
-const boardsId = '';
-const COLUMNS_BASE_URL = `/boards/${boardsId}/columns`;
+const COLUMNS_BASE_URL = `/boards`;
 
-export const createNewColumns = ({ title }: { title: string }) => {
-  return instance.post(COLUMNS_BASE_URL, { title: title }).then((data) => data.data);
+export const createNewColumns = (boardId: string, title: string) => {
+  return instance
+    .post(`${COLUMNS_BASE_URL}/${boardId}/columns`, { title: title })
+    .then((data) => data.data);
 };
-export const loadAllColumns = () => {
-  return instance.get(COLUMNS_BASE_URL).then((data) => data.data);
+export const loadAllColumns = (boardId: string) => {
+  return instance.get(`${COLUMNS_BASE_URL}/${boardId}/columns`).then((data) => data.data);
 };
-export const deleteColumnById = (id: string) => {
-  return instance.delete(`${COLUMNS_BASE_URL}/${id}`);
+export const deleteColumnById = (boardId: string, columnId: string) => {
+  return instance.delete(`${COLUMNS_BASE_URL}/${boardId}/columns/${columnId}`).then(() => columnId);
 };
-export const getInfoColumnById = (id: string) => {
-  return instance(`${COLUMNS_BASE_URL}/${id}`).then((data) => data.data);
+export const getInfoColumnById = (boardId: string, columnId: string) => {
+  return instance(`${COLUMNS_BASE_URL}/${boardId}/columns/${columnId}`).then((data) => data.data);
 };
 export const updateColumnData = ({
+  boardId,
   id,
   title,
   order
 }: {
+  boardId: string;
   id: string;
   title: string;
   order: string;
 }) => {
   return instance
-    .put(`${COLUMNS_BASE_URL}/${id}`, { title: title, order: order })
-    .then((data) => data);
+    .put(`${COLUMNS_BASE_URL}/${boardId}/columns/${id}`, { title: title, order: order })
+    .then((data) => data.data);
 };

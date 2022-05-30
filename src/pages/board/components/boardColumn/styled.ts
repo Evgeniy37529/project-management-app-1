@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 export const ColumnWrapper = styled.div`
-  min-width: 300px;
-  width: 300px;
   max-height: 550px;
   background: #e5e5e5;
   border-radius: 12px;
   margin-right: 40px;
   padding: 20px;
-  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -20,6 +17,9 @@ export const ColumnWrapper = styled.div`
     background-color: rgba(31, 112, 127, 0.5);
     border-radius: 0 20px 20px 0;
   }
+  @media (max-width: 1000px) {
+    margin-bottom: 30px;
+  }
 `;
 
 export const TitleStyled = styled.h3`
@@ -29,20 +29,6 @@ export const TitleStyled = styled.h3`
   font-weight: 600;
   font-size: 20px;
   color: #000;
-`;
-
-export const CardStyled = styled.div`
-  border-bottom: 5px solid #e5e5e5;
-  padding: 8px;
-  border-radius: 5px 5px 8px 8px;
-  background: white;
-  word-wrap: break-word;
-  color: #5c4f4f;
-  cursor: pointer;
-
-  &:hover {
-    background: #dbd5d5;
-  }
 `;
 
 export const AddCardWrapper = styled.div`
@@ -68,8 +54,8 @@ export const Settings = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 15px;
-  top: -14px;
+  right: -18px;
+  top: -20px;
 `;
 
 export const SettingsButton = styled.button`
@@ -91,4 +77,67 @@ export const TaskList = styled.ul`
   padding: 0;
   margin: 0;
   min-height: 5px;
+`;
+export const BlockAddColumn = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const ButtonAddColumn = styled.button<{ disabled: boolean }>`
+  background-image: url('https://www.svgrepo.com/show/158372/plus.svg');
+  background-repeat: no-repeat;
+  display: ${(props) => (props.disabled ? 'none' : 'flex')};
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: none;
+  transition: 1s;
+  margin-right: 10px;
+  &:hover {
+    background-image: url('https://www.svgrepo.com/show/157858/plus.svg');
+    cursor: pointer;
+  }
+`;
+export const NextColumnWrapper = styled.div`
+  max-height: 150px;
+  background: #e5e5e5;
+  border-radius: 12px;
+  margin-right: 40px;
+  padding: 0 20px 20px 0;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #e5e5e5;
+    border-radius: 0 20px 20px 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(31, 112, 127, 0.5);
+    border-radius: 0 20px 20px 0;
+  }
+`;
+export const BlockAddCard = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const EntryFieldCardTitle = styled.input`
+  border: none;
+  width: 85%;
+  background: transparent;
+`;
+export const SaveButtonCardTitle = styled.div<{ disabled: boolean }>`
+  background-image: url('https://www.svgrepo.com/show/98375/save.svg');
+  background-repeat: no-repeat;
+  display: ${(props) => (props.disabled ? 'none' : 'flex')};
+  width: 25px;
+  height: 25px;
+  border: none;
+  transition: 1s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 `;

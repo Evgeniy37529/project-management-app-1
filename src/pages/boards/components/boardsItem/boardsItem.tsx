@@ -1,10 +1,9 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { BoardsItemStyled, ShortField } from './styled';
-import { ReactComponent as Trash } from '../../../../assets/svg/trash.svg';
+import CustomModal from '../../../../components/modal/modal';
 import { Link } from 'react-router-dom';
-import { deleteBoard } from '../../../../store/reducers/boards';
-import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../store/store';
+import { useDispatch } from 'react-redux';
 import { getBoardById } from '../../../../store/reducers/boards';
 
 interface Props {
@@ -15,20 +14,22 @@ interface Props {
 
 const BoardsItem: FC<Props> = ({ id, title, description }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const deleteCurrentBoard = () => {
-    dispatch(deleteBoard(id));
-  };
   const requestCurrentInfoBoard = () => {
     dispatch(getBoardById(id));
   };
+
+  useEffect(() => {
+    localStorage.setItem('currentBoardId', id);
+  }, [id]);
+
   return (
     <BoardsItemStyled id={id}>
       <Link to={`/boards/${id}`}>
         <ShortField onClick={requestCurrentInfoBoard}>{title}</ShortField>
       </Link>
-      <ShortField style={{ width: '300px' }}>{description}</ShortField>
+      <ShortField>{description}</ShortField>
       <ShortField>
-        <Trash style={{ cursor: 'pointer' }} onClick={deleteCurrentBoard} />
+        <CustomModal title={title} type="boards" taskId="" columnId="" boardId={id} userId="" />
       </ShortField>
     </BoardsItemStyled>
   );

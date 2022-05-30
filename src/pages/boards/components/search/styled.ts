@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const InputStyled = styled.input`
   padding: 10px 15px 10px 50px;
-  width: 400px;
+  min-width: 250px;
+  max-width: 300px;
   height: 50px;
   background: #d1d1d1;
   border-radius: 8px;
