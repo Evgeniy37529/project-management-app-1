@@ -13,15 +13,21 @@ export const BoardsItemStyled = styled.li`
   font-size: 16px;
   transition: all 0.2s;
   cursor: pointer;
+  overflow: overlay;
 
   &:hover {
     background: #c4c4c4;
+  }
+
+  @media (max-width: 700px) {
+    margin: 0 0 10px 0;
+    flex-direction: column;
+    height: auto;
   }
 `;
 
 export const ShortField = styled.div`
   text-align: left;
-
   height: 100%;
   overflow: hidden;
   position: relative;
@@ -30,5 +36,8 @@ export const ShortField = styled.div`
   svg {
     position: absolute;
     right: 10px;
+  }
+  @media screen and (max-width: 700px) {
+    width: auto;
   }
 `;

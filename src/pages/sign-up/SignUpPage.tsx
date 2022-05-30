@@ -1,5 +1,5 @@
 import React, { useState, FocusEvent, useEffect } from 'react';
-import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
+import { Button, Checkbox, Form, Input, Alert, Spin, Grid } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { createUser, loginUser } from '../../store/reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { userSelector } from '../../store/selectors/user';
+import { FORM_BUTTON_LAYOUT } from '../../constants/editProfileConst';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -16,6 +17,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
+  const { useBreakpoint } = Grid;
+  const { md } = useBreakpoint();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   };
@@ -41,7 +44,7 @@ const SignUp = () => {
   }, []);
   return (
     <Form
-      style={{ marginTop: '10%' }}
+      style={{ marginTop: '10%', padding: !md ? '10px' : 0 }}
       name="basic"
       labelCol={{
         span: 8
@@ -94,21 +97,23 @@ const SignUp = () => {
       </Form.Item>
 
       <Form.Item
+        {...FORM_BUTTON_LAYOUT}
         name="remember"
         valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16
-        }}
+        // wrapperCol={{
+        //   offset: 8,
+        //   span: 8
+        // }}
       >
         <Checkbox>{t('signUp.remember_me')}</Checkbox>
       </Form.Item>
 
       <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16
-        }}
+        {...FORM_BUTTON_LAYOUT}
+        // wrapperCol={{
+        //   offset: 8,
+        //   span: 16
+        // }}
       >
         {status === 'loading' ? (
           <Spin />
