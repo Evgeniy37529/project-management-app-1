@@ -6,7 +6,6 @@ export const ColumnWrapper = styled.div`
   border-radius: 12px;
   margin-right: 40px;
   padding: 20px;
-  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -17,6 +16,9 @@ export const ColumnWrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(31, 112, 127, 0.5);
     border-radius: 0 20px 20px 0;
+  }
+  @media (max-width: 1000px) {
+    margin-bottom: 30px;
   }
 `;
 
@@ -103,7 +105,6 @@ export const NextColumnWrapper = styled.div`
   border-radius: 12px;
   margin-right: 40px;
   padding: 0 20px 20px 0;
-  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     width: 8px;
