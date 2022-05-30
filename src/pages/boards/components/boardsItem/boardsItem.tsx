@@ -27,7 +27,7 @@ const BoardsItem: FC<Props> = ({ id, title, description }) => {
       <Link to={`/boards/${id}`}>
         <ShortField onClick={requestCurrentInfoBoard}>{title}</ShortField>
       </Link>
-      <ShortField style={{ width: '300px' }}>{description}</ShortField>
+      <ShortField>{description}</ShortField>
       <ShortField>
         <CustomModal title={title} type="boards" taskId="" columnId="" boardId={id} userId="" />
       </ShortField>

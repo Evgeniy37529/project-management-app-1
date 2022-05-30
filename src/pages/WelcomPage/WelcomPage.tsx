@@ -66,7 +66,7 @@ export const WelcomePage: React.FC = () => {
             )}
           </AuthButtons>
         </StickyHeader>
-        <Content className="container">
+        <Content className="container" style={{ padding: '0 10px 0 10px' }}>
           <AboutProject>
             <Title style={{ fontSize: 'calc(1rem + 2vw)', textAlign: 'center' }} level={1}>
               {t('welcomPage.about_project_title')}
