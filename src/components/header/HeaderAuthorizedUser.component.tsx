@@ -37,8 +37,6 @@ const HeaderAuthorisingUser = () => {
     return name;
   }, [name]);
 
-  useEffect(() => console.log(id), [id]);
-  useEffect(() => console.log(name), [name]);
   const exit = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('currentBoardId');

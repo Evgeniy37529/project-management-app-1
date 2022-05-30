@@ -20,7 +20,6 @@ import { horizontalListSortingStrategy, SortableContext, useSortable } from '@dn
 import { CSS } from '@dnd-kit/utilities';
 import { t } from 'i18next';
 
-
 const BoardsColumn = ({ column }: { column: IColumns }) => {
   const { tasks } = useSelector(tasksSelector);
   const [columnTitle, setColumnTitle] = useState('');

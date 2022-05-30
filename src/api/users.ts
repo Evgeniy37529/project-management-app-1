@@ -16,9 +16,7 @@ export const signInUser = (userData: { login: string; password: string }) => {
 export const deleteUser = (id: string) => {
   try {
     instance.delete(`/users/${id}`);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 export const updateInfo = (userData: {
   id: string;
