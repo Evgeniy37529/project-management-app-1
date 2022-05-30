@@ -16,7 +16,6 @@ export const signInUser = (userData: { login: string; password: string }) => {
 export const deleteUser = (id: string) => {
   try {
     instance.delete(`/users/${id}`);
-    localStorage.removeItem('token');
   } catch (e) {
     console.log(e);
   }

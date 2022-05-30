@@ -44,10 +44,10 @@ const CustomModal: FC<Props> = ({ title, type, columnId, taskId, boardId, userId
     } else if (type === 'boards') {
       if (boardId) dispatch(deleteBoard(boardId));
     } else if (type === 'user') {
-      dispatch(eraseUser(userId));
-      dispatch(defaultStatus());
-      localStorage.removeItem('token');
-      navigate('/');
+      dispatch(eraseUser(userId))
+        .then(() => dispatch(defaultStatus()))
+        .then(() => localStorage.removeItem('token'))
+        .then(() => navigate('/'));
     }
   };
 
