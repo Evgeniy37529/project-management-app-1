@@ -26,7 +26,6 @@ export const updateColumnData = ({
   title: string;
   order: string;
 }) => {
-  console.log(id);
   return instance
     .put(`${COLUMNS_BASE_URL}/${boardId}/columns/${id}`, { title: title, order: order })
     .then((data) => data.data);

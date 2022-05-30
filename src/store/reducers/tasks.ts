@@ -10,6 +10,7 @@ import {
   updateTaskData
 } from '../../api/tasks';
 import { columnsSlice } from './columns';
+import { IColumns } from '../../types/columns';
 
 const initialState: IState = {
   error: null,
@@ -101,7 +102,7 @@ export const tasksSlice = createSlice({
       getAllTasks.fulfilled.type,
       (state: IState, action: { type: string; payload: ITask[] }) => {
         state.status = 'success';
-        state.tasks.push(...action.payload);
+        state.tasks.push(...action.payload.sort((a: IColumns, b: IColumns) => a.order - b.order));
       }
     );
     builder.addCase(
@@ -134,7 +135,7 @@ export const tasksSlice = createSlice({
       (state: IState, action: { type: string; payload: string }) => {
         state.status = 'loading';
         state.error = null;
-        state.tasks.filter((el) => el.id !== action.payload);
+        state.tasks = state.tasks.filter((el) => el.id !== action.payload);
       }
     );
     builder.addCase(
@@ -148,9 +149,14 @@ export const tasksSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     });
-    builder.addCase(updateTask.fulfilled.type, (state: IState) => {
-      state.status = 'success';
-    });
+    builder.addCase(
+      updateTask.fulfilled.type,
+      (state: IState, action: { type: string; payload: ITask }) => {
+        state.status = 'success';
+        state.tasks = state.tasks.filter((el) => el.id !== action.payload.id);
+        state.tasks.splice(action.payload.order - 1, 0, action.payload);
+      }
+    );
     builder.addCase(
       updateTask.rejected.type,
       (state: IState, action: { type: string; payload: string }) => {

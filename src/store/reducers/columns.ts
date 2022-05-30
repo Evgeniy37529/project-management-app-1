@@ -38,7 +38,6 @@ export const deleteColumn = createAsyncThunk(
 export const updateColumn = createAsyncThunk(
   'columns/updateColumn',
   (columnData: { boardId: string; id: string; title: string; order: string }) => {
-    console.log(columnData);
     return updateColumnData(columnData);
   }
 );

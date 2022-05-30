@@ -9,32 +9,15 @@ import {
   TitleStyled
 } from './styled';
 import CustomModal from '../../../../components/modal/modal';
-import { Data } from '../boardWrapper/boardWrapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../../store/store';
 import { useParams } from 'react-router-dom';
-import { createColumns, getAllColumns } from '../../../../store/reducers/columns';
 import BoardItem from '../boardItem/boardItem';
 import { IColumns } from '../../../../types/columns';
 import { tasksSelector } from '../../../../store/selectors/tasks';
 import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
-import { useSortable } from '@dnd-kit/sortable';
+import { horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-
-interface Props {
-  tasks: {
-    id: string;
-    content: string;
-  }[];
-  column: {
-    id: string;
-    title: string;
-    taskIds: string[];
-  };
-  index: number;
-  currentState: Data;
-  setNewState: (newState: Data) => void;
-}
 
 const BoardsColumn = ({ column }: { column: IColumns }) => {
   const { tasks } = useSelector(tasksSelector);
@@ -45,6 +28,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: column.id
   });
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition
@@ -63,10 +47,10 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
   const inputCleaning = (ev: FocusEvent<HTMLInputElement>) => {
     ev.target.value = '';
   };
+
   useEffect(() => {
     if (boardId) dispatch(getAllTasks({ boardId, columnId: column.id }));
   }, [dispatch]);
-
   return (
     <ColumnWrapper ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
@@ -80,11 +64,15 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
           boardId={boardId ? boardId : ''}
         />
       </div>
-      {tasks.map((el) => {
-        if (el.columnId === column.id) {
-          return <BoardItem columnId={column.id} task={el} key={el.id} />;
-        }
-      })}
+
+      <SortableContext items={tasks} strategy={horizontalListSortingStrategy}>
+        {tasks.map((el) => {
+          if (el.columnId === column.id) {
+            return <BoardItem columnId={column.id} task={el} key={el.id} />;
+          }
+        })}
+      </SortableContext>
+
       <NextColumnWrapper>
         <BlockAddColumn>
           <ButtonAddColumn onClick={disableChange} disabled={disabled} />

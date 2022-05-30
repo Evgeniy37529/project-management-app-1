@@ -19,6 +19,7 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
+  DragOverEvent,
   KeyboardSensor,
   MouseSensor,
   PointerSensor,
@@ -31,6 +32,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable';
+import tasks, { createTasks, deleteTask, updateTask } from '../../../../store/reducers/tasks';
+import { tasksSelector } from '../../../../store/selectors/tasks';
 
 export interface Data {
   tasks: { [key: string]: { id: string; content: string } };
@@ -41,6 +44,7 @@ export interface Data {
 const BoardWrapper: FC = () => {
   const { t } = useTranslation();
   const { columns } = useSelector(columnsSelector);
+  const { tasks } = useSelector(tasksSelector);
   const [disabled, setDisabled] = useState(false);
   const [columnTitle, setColumnTitle] = useState('');
   const dispatch = useDispatch<AppDispatch>();
@@ -61,13 +65,11 @@ const BoardWrapper: FC = () => {
   }, [dispatch]);
   const sensors = useSensors(
     useSensor(MouseSensor, {
-      // Require the mouse to move by 10 pixels before activating
       activationConstraint: {
         distance: 10
       }
     }),
     useSensor(TouchSensor, {
-      // Press delay of 250ms, with tolerance of 5px of movement
       activationConstraint: {
         delay: 250,
         tolerance: 5
@@ -82,24 +84,86 @@ const BoardWrapper: FC = () => {
     const { active, over } = event;
     if (over) {
       if (active.id !== over.id) {
-        const title = columns.find((el) => el.id === String(active.id))?.title;
+        const columnTitle = columns.find((el) => el.id === String(active.id))?.title;
+        const activeTask = tasks.find((el) => el.id === String(active.id));
+        const task = tasks.find((el) => el.id === String(active.id));
+        const activeColumn = columns.find(
+          (el) => el.id === tasks.find((el) => el.id === String(active.id))?.columnId
+        );
+        const overTask = tasks.find((el) => el.id === String(over.id));
+        const overColumn = columns.find((el) => el.id === overTask?.columnId);
+        if (!boardId) {
+          return;
+        }
 
-        if (boardId)
+        if (task && activeColumn && overColumn) {
+          if (activeColumn.id !== overColumn.id) {
+            dispatch(
+              deleteTask({
+                boardId,
+                columnId: activeColumn.id ?? '',
+                taskId: String(active.id)
+              })
+            )
+              .then(() =>
+                dispatch(
+                  createTasks({
+                    boardId,
+                    columnId: overColumn.id ?? '',
+                    title: task.title ?? ''
+                  })
+                )
+              )
+              .then(() =>
+                dispatch(
+                  updateTask({
+                    boardId,
+                    description: task.title ?? '',
+                    columnId: overColumn.id ?? '',
+                    taskId: String(active.id),
+                    title: task.title ?? '',
+                    userId: String(localStorage.getItem('userId')),
+                    order: over?.data.current?.sortable.index + 1
+                  })
+                )
+              );
+          } else {
+            dispatch(
+              updateTask({
+                boardId,
+                description: task.title ?? '',
+                columnId: activeColumn.id,
+                taskId: String(active.id),
+                title: task.title ?? '',
+                userId: String(localStorage.getItem('userId')),
+                order: over?.data.current?.sortable.index + 1
+              })
+            );
+          }
+        }
+
+        if (columnTitle)
           dispatch(
             updateColumn({
               boardId,
               id: String(active.id),
-              title: title ? title : '',
+              title: columnTitle ?? '',
               order: over?.data.current?.sortable.index + 1
             })
           );
       }
     }
   };
+  const dragOver = (event: DragOverEvent) => {};
 
   return (
     <BoardWrapperStyled>
-      <DndContext onDragEnd={dragEnd} sensors={sensors} collisionDetection={closestCenter}>
+      <DndContext
+        onDragEnd={dragEnd}
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragOver={dragOver}
+      >
         <SortableContext items={columns} strategy={verticalListSortingStrategy}>
           {columns.map((el) => (
             <BoardsColumn column={el} key={el.id} />
