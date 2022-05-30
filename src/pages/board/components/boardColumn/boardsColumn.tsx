@@ -21,6 +21,7 @@ import BoardItem from '../boardItem/boardItem';
 import { IColumns } from '../../../../types/columns';
 import { tasksSelector } from '../../../../store/selectors/tasks';
 import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
+import { t } from 'i18next';
 
 interface Props {
   tasks: {
@@ -72,6 +73,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
           columnId={column.id}
           type="column"
           boardId={boardId ? boardId : ''}
+          userId=""
         />
       </div>
       {tasks.map((el) => {
@@ -88,7 +90,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
             onChange={nameEntryTask}
             onBlur={inputCleaning}
             disabled={!disabled}
-            placeholder={disabled ? 'Введите текст' : 'Добавить таск'}
+            placeholder={disabled ? t('boardsColumn.enter_text') : t('boardsColumn.add_task')}
           />
           <SaveButtonCardTitle disabled={!disabled} onClick={addNewTask} />
         </BlockAddColumn>

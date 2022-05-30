@@ -17,6 +17,7 @@ const BoardItem = ({ columnId, task }: { columnId: string; task: ITask }) => {
         title={task.title}
         type="item"
         boardId={boardID ? boardID : ''}
+        userId=""
       />
     </CardStyled>
   );

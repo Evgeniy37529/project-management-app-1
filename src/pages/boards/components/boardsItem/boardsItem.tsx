@@ -29,7 +29,7 @@ const BoardsItem: FC<Props> = ({ id, title, description }) => {
       </Link>
       <ShortField style={{ width: '300px' }}>{description}</ShortField>
       <ShortField>
-        <CustomModal title={title} type="boards" taskId="" columnId="" boardId={id} />
+        <CustomModal title={title} type="boards" taskId="" columnId="" boardId={id} userId="" />
       </ShortField>
     </BoardsItemStyled>
   );

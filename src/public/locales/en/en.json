@@ -33,19 +33,30 @@
     "header": {
         "create_new_board": "Create new board",
         "edit_profile": "Edit profile",
-        "sign_out": "Sign Out"
+        "sign_out": "Sign Out",
+        "go_boards": "Go to boards"
     },
     "editProfile": {
         "name": "New name",
-        "login": "New login",
-        "password": "New password",
+        "login": "Login",
+        "password": "Password",
         "input_name_message": "Please input your new name!",
-        "input_login_message": "Please input your new login!",
-        "input_password_message": "Please input your new password!",
+        "input_login_message": "Please input your login!",
+        "input_password_message": "Please input your password!",
         "save_changes": "Save changes",
         "delete_user": "Delete user",
         "cancel": "Cancel"
-    }   
+    },
+    "modalDelete": {
+        "confirmDeletion": "Confirm the deletion",
+        "delete": "Delete",
+        "user": "user"
+    },
+    "boardsColumn": {
+        "add_task": "Add task",
+        "enter_text": "Enter the text",
+        "add_column":"Add column"
+    }    
     
 
 }

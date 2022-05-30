@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input, Alert, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../store/reducers/user';
+import { loginUser, userSlice } from '../../store/reducers/user';
 import { AppDispatch, RootState } from '../../store/store';
 import { userSelector } from '../../store/selectors/user';
 
@@ -13,6 +13,7 @@ const Login = (): JSX.Element => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const { status } = useSelector(userSelector);
+  const { getUserId, defaultStatus } = userSlice.actions;
   const { t, i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
@@ -33,6 +34,7 @@ const Login = (): JSX.Element => {
   useEffect(() => {
     if (status === 'success') {
       navigate('/boards');
+      dispatch(defaultStatus());
     }
   }, [status, navigate]);
 

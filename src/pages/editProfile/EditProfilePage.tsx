@@ -3,15 +3,27 @@ import { Button, Form, Input, Alert } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FORM_BUTTON_LAYOUT } from '../../constants/editProfileConst';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { userSelector } from '../../store/selectors/user';
+import { updateInfoUser } from '../../store/reducers/user';
+import CustomModal from '../../components/modal/modal';
 
 const EditProfilePage = () => {
   const [newName, setNewName] = useState('');
   const [newLogin, setNewLogin] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const { t, i18n } = useTranslation();
-  useEffect(() => {
-    i18n.changeLanguage(localStorage.getItem('language') || 'en');
-  }, []);
+  const dispatch = useDispatch<AppDispatch>();
+  const { id, name, status } = useSelector(userSelector);
+  const onFinish = () => {
+    id && dispatch(updateInfoUser({ id, name: newName, login: newLogin, password: newPassword }));
+    return <Alert message="Success Text" type="success" />;
+  };
+  const onFinishFailed = () => {
+    return <Alert message="Incorrect username or password entered." type="error" />;
+  };
+
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
     setNewName(ev.target.value);
   };
@@ -23,13 +35,10 @@ const EditProfilePage = () => {
   };
 
   const navigate = useNavigate();
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('language') || 'en');
+  }, []);
 
-  const onFinish = () => {
-    return <Alert message="Success Text" type="success" />;
-  };
-  const onFinishFailed = () => {
-    return <Alert message="Incorrect username or password entered." type="error" />;
-  };
   return (
     <Form
       style={{ marginTop: '10%', padding: '0 20px' }}
@@ -71,9 +80,15 @@ const EditProfilePage = () => {
         >
           {t('editProfile.save_changes')}
         </Button>
-        <Button danger type="primary">
-          {t('editProfile.delete_user')}
-        </Button>
+
+        <CustomModal
+          title={name ? name : ''}
+          type="user"
+          taskId=""
+          columnId=""
+          boardId=""
+          userId={id ? id : ''}
+        />
       </Form.Item>
       <Form.Item {...FORM_BUTTON_LAYOUT}>
         <Button type="primary" onClick={() => navigate(-1)}>
