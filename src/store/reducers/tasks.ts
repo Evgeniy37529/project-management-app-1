@@ -26,8 +26,18 @@ export const getAllTasks = createAsyncThunk(
 );
 export const createTasks = createAsyncThunk(
   'tasks/createTasks',
-  ({ boardId, columnId, title }: { boardId: string; columnId: string; title: string }) => {
-    return createNewTask(boardId, columnId, title);
+  ({
+    boardId,
+    columnId,
+    title,
+    userId
+  }: {
+    boardId: string;
+    columnId: string;
+    title: string;
+    userId: string;
+  }) => {
+    return createNewTask(boardId, columnId, title, userId);
   }
 );
 export const getTaskById = createAsyncThunk(

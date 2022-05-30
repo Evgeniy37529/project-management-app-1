@@ -34,6 +34,7 @@ import {
 } from '@dnd-kit/sortable';
 import tasks, { createTasks, deleteTask, updateTask } from '../../../../store/reducers/tasks';
 import { tasksSelector } from '../../../../store/selectors/tasks';
+import { userSelector } from '../../../../store/selectors/user';
 
 export interface Data {
   tasks: { [key: string]: { id: string; content: string } };
@@ -49,6 +50,7 @@ const BoardWrapper: FC = () => {
   const [columnTitle, setColumnTitle] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const boardId = useParams().id;
+  const { id } = useSelector(userSelector);
 
   const disableChange = () => {
     setDisabled(!disabled);
@@ -96,7 +98,7 @@ const BoardWrapper: FC = () => {
           return;
         }
 
-        if (task && activeColumn && overColumn) {
+        if (task && activeColumn && overColumn && id) {
           if (activeColumn.id !== overColumn.id) {
             dispatch(
               deleteTask({
@@ -110,7 +112,8 @@ const BoardWrapper: FC = () => {
                   createTasks({
                     boardId,
                     columnId: overColumn.id ?? '',
-                    title: task.title ?? ''
+                    title: task.title ?? '',
+                    userId: id
                   })
                 )
               )

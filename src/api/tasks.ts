@@ -1,15 +1,18 @@
 import instance from './axiosInstance';
 import { ITask } from '../types/tasks';
 import { AxiosPromise } from 'axios';
+import { userSelector } from '../store/selectors/user';
+import { useSelector } from 'react-redux';
 
+//const { id } = useSelector(userSelector);
 const TASKS_BASE_URL = `/boards`;
 
-export const createNewTask = (boardId: string, columnId: string, title: string) => {
+export const createNewTask = (boardId: string, columnId: string, title: string, userId: string) => {
   return instance
     .post(`${TASKS_BASE_URL}/${boardId}/columns/${columnId}/tasks`, {
       title: title,
       description: title,
-      userId: localStorage.getItem('userId')
+      userId: userId
     })
     .then((data) => data.data);
 };

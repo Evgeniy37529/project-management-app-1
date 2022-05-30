@@ -19,9 +19,11 @@ import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
 import { horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { t } from 'i18next';
+import { userSelector } from '../../../../store/selectors/user';
 
 const BoardsColumn = ({ column }: { column: IColumns }) => {
   const { tasks } = useSelector(tasksSelector);
+  const { id } = useSelector(userSelector);
   const [columnTitle, setColumnTitle] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const boardId = useParams().id;
@@ -42,7 +44,8 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
     setColumnTitle(ev.target.value);
   };
   const addNewTask = () => {
-    if (boardId) dispatch(createTasks({ columnId: column.id, boardId, title: columnTitle }));
+    if (boardId && id)
+      dispatch(createTasks({ columnId: column.id, boardId, title: columnTitle, userId: id }));
     disableChange();
   };
   const inputCleaning = (ev: FocusEvent<HTMLInputElement>) => {
