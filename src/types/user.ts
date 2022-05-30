@@ -1,4 +1,5 @@
 export interface IState {
+  id?: string;
   name?: string;
   login?: string;
   password?: string;

@@ -18,6 +18,8 @@ import { tasksSelector } from '../../../../store/selectors/tasks';
 import { createTasks, getAllTasks } from '../../../../store/reducers/tasks';
 import { horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { t } from 'i18next';
+
 
 const BoardsColumn = ({ column }: { column: IColumns }) => {
   const { tasks } = useSelector(tasksSelector);
@@ -51,6 +53,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
   useEffect(() => {
     if (boardId) dispatch(getAllTasks({ boardId, columnId: column.id }));
   }, [dispatch]);
+
   return (
     <ColumnWrapper ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
@@ -62,6 +65,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
           columnId={column.id}
           type="column"
           boardId={boardId ? boardId : ''}
+          userId=""
         />
       </div>
 
@@ -82,7 +86,7 @@ const BoardsColumn = ({ column }: { column: IColumns }) => {
             onChange={nameEntryTask}
             onBlur={inputCleaning}
             disabled={!disabled}
-            placeholder={disabled ? 'Введите текст' : 'Добавить таск'}
+            placeholder={disabled ? t('boardsColumn.enter_text') : t('boardsColumn.add_task')}
           />
           <SaveButtonCardTitle disabled={!disabled} onClick={addNewTask} />
         </BlockAddColumn>

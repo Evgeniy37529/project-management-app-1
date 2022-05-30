@@ -33,17 +33,28 @@
     "header": {
         "create_new_board": "Создать новую доску",
         "edit_profile": "Редактировать профиль",
-        "sign_out": "Выйти"
+        "sign_out": "Выйти",
+        "go_boards": "Перейти к бордам"
     },
     "editProfile": {
         "name": "Новое имя",
-        "login": "Новый логин",
-        "password": "Новый пароль",
+        "login": "Логин",
+        "password": "Пароль",
         "input_name_message": "Пожалуйста введите ваше новое имя!",
-        "input_login_message": "Пожалуйста введите ваш новый логин!",
-        "input_password_message": "Пожалуйста введите ваш новый пароль!",
+        "input_login_message": "Пожалуйста введите ваш логин!",
+        "input_password_message": "Пожалуйста введите ваш пароль!",
         "save_changes": "Сохранить изменения",
         "delete_user": "Удалить пользователя",
         "cancel": "Отмена"
-    }           
+    },
+    "modalDelete": {
+        "confirmDeletion": "Подтвердите удаление",
+        "delete": "Удалить",
+        "user": "пользователя"
+    },
+    "boardsColumn": {
+        "add_task": "Добавить таск",
+        "enter_text": "Введите текст",
+        "add_column":"Добавить колонку"
+    }             
 }

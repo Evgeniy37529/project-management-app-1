@@ -14,7 +14,11 @@ export const signInUser = (userData: { login: string; password: string }) => {
   });
 };
 export const deleteUser = (id: string) => {
-  return instance.delete(`/users/${id}`);
+  try {
+    instance.delete(`/users/${id}`);
+  } catch (e) {
+    console.log(e);
+  }
 };
 export const updateInfo = (userData: {
   id: string;
@@ -22,9 +26,17 @@ export const updateInfo = (userData: {
   login: string;
   password: string;
 }) => {
-  return instance.put(`/users/${userData.id}`, {
-    name: userData.name,
-    login: userData.login,
-    password: userData.password
+  return instance
+    .put(`/users/${userData.id}`, {
+      name: userData.name,
+      login: userData.login,
+      password: userData.password
+    })
+    .then((data) => data.data);
+};
+
+export const getUser = (id: string) => {
+  return instance.get(`users/${id}`).then((data) => {
+    return data.data;
   });
 };

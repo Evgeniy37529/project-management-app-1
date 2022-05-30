@@ -179,7 +179,7 @@ const BoardWrapper: FC = () => {
             type="text"
             onChange={nameEntryTask}
             disabled={!disabled}
-            placeholder={disabled ? 'Введите текст' : 'Добавить колонку'}
+            placeholder={disabled ? t('boardsColumn.enter_text') : t('boardsColumn.add_column')}
           />
           <SaveButtonCardTitle disabled={!disabled} onClick={addNewColumn} />
         </BlockAddColumn>
