@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, userSlice } from '../../store/reducers/user';
 import { AppDispatch, RootState } from '../../store/store';
 import { userSelector } from '../../store/selectors/user';
+import WarningModal from '../sign-up/signUpModal';
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Login = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const { status } = useSelector(userSelector);
   const { getUserId, defaultStatus } = userSlice.actions;
+  const [isShowError, setIsShowError] = useState(false);
   const { t, i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
@@ -35,6 +37,11 @@ const Login = (): JSX.Element => {
     if (status === 'success') {
       navigate('/boards');
       dispatch(defaultStatus());
+    } else if (status === 'error') {
+      setIsShowError(true);
+      setTimeout(() => {
+        setIsShowError(false);
+      }, 3000);
     }
   }, [status, navigate]);
 
@@ -106,6 +113,7 @@ const Login = (): JSX.Element => {
           </Button>
         )}
       </Form.Item>
+      {isShowError ? <WarningModal message="Такого пользователя не существует" /> : null}
     </Form>
   );
 };

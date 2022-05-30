@@ -7,6 +7,8 @@ import { createUser, loginUser } from '../../store/reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { userSelector } from '../../store/selectors/user';
+import WarningModal from './signUpModal';
+import { stat } from 'fs';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -14,6 +16,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const { status } = useSelector(userSelector);
   const navigate = useNavigate();
+  const [isShowError, setIsShowError] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
   const changeName = (ev: FocusEvent<HTMLInputElement>) => {
@@ -28,9 +31,13 @@ const SignUp = () => {
 
   const createAccount = () => {
     dispatch(createUser({ name, login, password })).then(() => {
-      dispatch(loginUser({ login, password })).then(() => {
-        navigate('/boards');
-      });
+      if (!isShowError) {
+        dispatch(loginUser({ login, password })).then(() => {
+          if (!isShowError) {
+            navigate('/boards');
+          }
+        });
+      }
     });
   };
   const onFinish = () => {
@@ -39,6 +46,14 @@ const SignUp = () => {
   useEffect(() => {
     i18n.changeLanguage(localStorage.getItem('language') || 'en');
   }, []);
+  useEffect(() => {
+    if (status === 'error') {
+      setIsShowError(true);
+      setTimeout(() => {
+        setIsShowError(false);
+      }, 3000);
+    }
+  }, [status, navigate]);
   return (
     <Form
       style={{ marginTop: '10%' }}
@@ -118,6 +133,7 @@ const SignUp = () => {
           </Button>
         )}
       </Form.Item>
+      {isShowError ? <WarningModal message="Такой пользователь уже существует" /> : null}
     </Form>
   );
 };

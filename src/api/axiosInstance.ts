@@ -9,8 +9,7 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    // Сделайте что-нибудь с ошибкой запроса
-    return Promise.reject(error);
+    throw new Error(`${error.message}, status: ${error.status}`);
   }
 );
 export default instance;
